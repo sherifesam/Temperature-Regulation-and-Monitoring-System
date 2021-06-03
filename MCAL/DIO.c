@@ -2,9 +2,9 @@
  * DIO.c
  *
  */
-#include "../STD_Types.h"
+#include "STD_Types.h"
 #include "DIO.h"
-#include "../macros.h"
+#include "macros.h"
 
 /*Local defines*/
 
@@ -269,6 +269,46 @@ u8 DIO_u8GetPinaValue (u8 u8PortName , u8 u8PinNo )
 	}
 
 	return Value ;
+}
+
+void DIO_vidSetLowNibbleValue(u8 u8PortName, u8 u8LowNibbleValue)
+{
+	u8LowNibbleValue &= 0x0f;
+	switch(u8PortName)
+	{
+		case PORTA:
+		PORTA_REGISTER &= 0xf0;
+		PORTA_REGISTER |= u8LowNibbleValue;
+		case PORTB:
+		PORTB_REGISTER &= 0xf0;
+		PORTB_REGISTER |= u8LowNibbleValue;
+		case PORTC:
+		PORTC_REGISTER &= 0xf0;
+		PORTC_REGISTER |= u8LowNibbleValue;
+		case PORTD:
+		PORTD_REGISTER &= 0xf0;
+		PORTD_REGISTER |= u8LowNibbleValue;
+	}
+}
+
+void DIO_vidSetHighNibbleValue(u8 u8PortName, u8 u8HighNibbleValue)
+{
+	u8HighNibbleValue <<= 4;
+	switch(u8PortName)
+	{
+		case PORTA:
+		PORTA_REGISTER &= 0x0f;
+		PORTA_REGISTER |= u8HighNibbleValue;
+		case PORTB:
+		PORTB_REGISTER &= 0x0f;
+		PORTB_REGISTER |= u8HighNibbleValue;
+		case PORTC:
+		PORTC_REGISTER &= 0x0f;
+		PORTC_REGISTER |= u8HighNibbleValue;
+		case PORTD:
+		PORTD_REGISTER &= 0x0f;
+		PORTD_REGISTER |= u8HighNibbleValue;
+	}
 }
 
 
