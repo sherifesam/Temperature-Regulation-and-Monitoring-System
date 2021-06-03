@@ -9,10 +9,11 @@
 #define LCD_H_
 #include "STD_Types.h"
 #include "DIO.h"
-#include "LCD_cfg.h"
+#include "LCD_config.h"
 
 #define CLR_SCREEN 0x01
 #define CURSOR_ON_DISPLAN_ON 0x0e
+#define CURSOR_OFF_DISPLAN_ON 0x0c
 #define RETURN_HOME 0x02
 #define ENTRY_MODE 0x06
 

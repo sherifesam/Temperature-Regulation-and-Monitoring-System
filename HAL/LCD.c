@@ -26,7 +26,7 @@ void LCD_vInit(void)
 	DIO_vidSetPinValue(LCD_RWPort,LCD_RWPin,LOW);
 	LCD_vSend_cmd(EIGHT_BITS); //8 bit mode
 	_delay_ms(1);
-	LCD_vSend_cmd(CURSOR_ON_DISPLAN_ON);//display on cursor on
+	LCD_vSend_cmd(CURSOR_OFF_DISPLAN_ON);//display off cursor on
 	_delay_ms(1);
 	LCD_vSend_cmd(CLR_SCREEN);//clear the screen
 	_delay_ms(10);
@@ -46,7 +46,7 @@ void LCD_vInit(void)
 	_delay_ms(10);
 	LCD_vSend_cmd(FOUR_BITS); //4bit mode
 	_delay_ms(1);
-	LCD_vSend_cmd(CURSOR_ON_DISPLAN_ON);//display on cursor on
+	LCD_vSend_cmd(CURSOR_OFF_DISPLAN_ON);//display off cursor on
 	_delay_ms(1);
 	LCD_vSend_cmd(CLR_SCREEN);//clear the screen
 	_delay_ms(10);
