@@ -1,3 +1,10 @@
+/* *********************************** */
+/* Author     : Muhammed Ehab Adel     */
+/* Describtion: TIMER0_PRIVT	       */
+/* Date       :Jun 3,2021              */
+/* Version    : 1.0v                   */
+/* *********************************** */
+
 #ifndef _TIMER0_PRIV
 #define _TIMER0_PRIV
 

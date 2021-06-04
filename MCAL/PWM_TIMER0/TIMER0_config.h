@@ -1,3 +1,9 @@
+/* *********************************** */
+/* Author     : Muhammed Ehab Adel     */
+/* Describtion: TIMER0_CONFIG	       */
+/* Date       :Jun 3,2021              */
+/* Version    : 1.0v                   */
+/* *********************************** */
 #include "STD_TYPES.h"
 #include "macros.h"
 
