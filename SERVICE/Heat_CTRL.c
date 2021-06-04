@@ -14,10 +14,10 @@
 
 void Heat_CNRL_Duty_Cycle(s8 Current_Temp, s8 Set_Temp, f32* Duty_Value)
 {
-	u16 Temp_Volt = 0;
+	f32 Temp_Volt = 0;
 	u16 Potontiometer_Volt = 0;
 
-	Temp_Volt = (( Set_Temp - Current_Temp) / 100 ) * 10 ;
+	Temp_Volt = (( Set_Temp - Current_Temp) / 100.0 ) * 10.0 ;
 	//Potontiometer_Volt  = (ADC_u16Read() * (5/255));
 	/*if ((u16)ADC_u16Read() > 280 )
 	{
@@ -27,15 +27,14 @@ void Heat_CNRL_Duty_Cycle(s8 Current_Temp, s8 Set_Temp, f32* Duty_Value)
 	{
 		*Duty_Value = 2;
 	}*/
-	
 	Potontiometer_Volt = 5;
-	*Duty_Value = ((( Potontiometer_Volt * 2 ) / 10 ) * Temp_Volt ) / 10;
+	*Duty_Value = ((( Potontiometer_Volt * 2.0 ) / 10.0 ) * Temp_Volt ) / 10.0;
 }
 
 
 void Heat_CNRL_Duty_Value_Map(f32 Duty_Value , u16 * PWM_Duty )
 {
-	*PWM_Duty = (u16)Duty_Value * 255;
+	*PWM_Duty = (u16)(Duty_Value * 255);
 }
 
 
