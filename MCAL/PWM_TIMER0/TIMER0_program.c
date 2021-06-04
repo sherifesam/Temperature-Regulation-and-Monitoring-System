@@ -1,3 +1,10 @@
+/* *********************************** */
+/* Author     : Muhammed Ehab Adel     */
+/* Describtion: TIMER0_PRGRM	       */
+/* Date       :Jun 3,2021              */
+/* Version    : 1.0v                   */
+/* *********************************** */
+
 #include "STD_TYPES.h"
 #include "macros.h"
 #include "TIMER0_interface.h"
