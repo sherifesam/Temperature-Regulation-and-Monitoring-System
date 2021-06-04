@@ -23,7 +23,7 @@ void ADC_init(){
 	set_bit(MADC->ADMUX,ADLAR);
 }
 
-f32 ADC_GetValue(){
+u8 ADC_GetValue(){
 	u8 high;
 	/*start conversion*/
 	set_bit(MADC->ADCSRA,ADSC);
