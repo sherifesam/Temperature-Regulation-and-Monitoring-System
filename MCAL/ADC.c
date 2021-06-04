@@ -10,7 +10,7 @@
 #include "ADC_priv.h"
 #include "ADC.h"
 
-void ADC_init(){
+void ADC_init(void){
 	/*SET PINS DIR*/
 	DIO_vidSetPinDir(PORTA, PIN0, INPUT);
 
@@ -23,7 +23,7 @@ void ADC_init(){
 	set_bit(MADC->ADMUX,ADLAR);
 }
 
-u8 ADC_GetValue(){
+f32 ADC_GetValue(void){
 	u8 high;
 	/*start conversion*/
 	set_bit(MADC->ADCSRA,ADSC);

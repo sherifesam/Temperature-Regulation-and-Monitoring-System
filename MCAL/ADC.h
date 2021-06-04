@@ -8,7 +8,7 @@
 #define _ADC_H
 
 
-u8 ADC_GetValue();
-void ADC_init();
+f32 ADC_GetValue(void);
+void ADC_init(void);
 
 #endif
