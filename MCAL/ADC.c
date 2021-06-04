@@ -3,34 +3,37 @@
  *
  * Created: 6/2/2021 6:04:15 PM
  * Author : mostafa amr
- */
+ */ 
 #include "STD_Types.h"
 #include "macros.h"
+#include "DIO.h"
 #include "ADC_priv.h"
+#include "ADC.h"
 
-void ADC_vinit(void)
-{
-	/* configure VREF */
-	set_bit(MADC->ADMUX,REFS0);
-	set_bit(MADC->ADMUX,REFS1);
-	/* enable ADC */
+void ADC_init(){
+	/*SET PINS DIR*/
+	DIO_vidSetPinDir(PORTA, PIN0, INPUT);
+
+	/*ADC ON*/
 	set_bit(MADC->ADCSRA,ADEN);
-	/* adjust ADC clock */
-	set_bit(MADC->ADCSRA,ADPS2);
-	set_bit(MADC->ADCSRA,ADPS1);
+	/*V reference*/
+	set_bit(MADC->ADMUX,REFS0);
+
+	/*READ ADCH ONLY*/
+	set_bit(MADC->ADMUX,ADLAR);
 }
-u16 ADC_u16Read(void)
-{
-	u16 read_val = 0;
-	
-	/* start conversion */
+
+f32 ADC_GetValue(){
+	u8 high;
+	/*start conversion*/
 	set_bit(MADC->ADCSRA,ADSC);
-	/* stay in your position till ADIF become 1 */
+
+	/*polling*/
 	while(is_bit_clr(MADC->ADCSRA,ADIF));
 	/* clear ADIF */
 	set_bit(MADC->ADCSRA,ADIF);
-	/* read analog input */
-	read_val=(MADC->ADCL);
-	read_val|=((MADC->ADCH)<<8);
-	return read_val ;
+
+	high = MADC->ADCH;
+	return (high*5)/256;
 }
+

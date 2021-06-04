@@ -4,12 +4,11 @@
  * Created: 6/2/2021 6:04:15 PM
  * Author : mostafa amr
  */ 
-
-#ifndef ADC_H_
-#define ADC_H_
-
-void ADC_vinit(void);
-u16 ADC_u16Read(void);
+#ifndef _ADC_H
+#define _ADC_H
 
 
-#endif /* ADC_H_ */
+u8 ADC_GetValue();
+void ADC_init();
+
+#endif
