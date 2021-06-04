@@ -12,6 +12,7 @@ void ADC_vinit(void)
 {
 	/* configure VREF */
 	set_bit(MADC->ADMUX,REFS0);
+	set_bit(MADC->ADMUX,REFS1);
 	/* enable ADC */
 	set_bit(MADC->ADCSRA,ADEN);
 	/* adjust ADC clock */
