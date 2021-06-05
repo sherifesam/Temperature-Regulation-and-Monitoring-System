@@ -1,7 +1,7 @@
 #ifndef SERVICE_KEYPAD_OS_H_
 #define SERVICE_KEYPAD_OS_H_
 
-#include "Keypad_OS.h"
+#include "HAL/Keypad_OS.h"
 
 #define KEYPAD_SERVICE_PEROIDICTY 200
 

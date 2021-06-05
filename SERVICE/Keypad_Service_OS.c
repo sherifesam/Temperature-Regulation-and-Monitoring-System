@@ -10,7 +10,7 @@ void Keypad_service_OS_Task(void *pvoid)
     u8 pressed_key = 0;
     while(1)
     {
-        if(num_of_digits < 2)
+        if(num_of_digits_OS < 2)
     	{
             pressed_key = KEYPAD_u8GetPressedKey_OS();
             if(pressed_key != 'A' && pressed_key != '=' && pressed_key != 0)
