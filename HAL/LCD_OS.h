@@ -9,10 +9,10 @@
 #define HAL_LCD_OS_H_
 
 
-#include "../STD_Types.h"
-#include "../FreeRTOS/FreeRTOS.h"
-#include "../FreeRTOS/task.h"
-#include "../MCAL/DIO.h"
+#include "STD_Types.h"
+#include "FreeRTOS/FreeRTOS.h"
+#include "FreeRTOS/task.h"
+#include "DIO.h"
 #include "LCD_OS_cfg.h"
 
 #define lcd_Clear           0x01          /* replace all characters with ASCII 'space'                       */

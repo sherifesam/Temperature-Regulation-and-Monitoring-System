@@ -44,7 +44,7 @@ void DIO_vidSetPinDir(u8 u8portName, u8 u8pinNo , u8 u8PortDir);
 void DIO_vidSetPortValue (u8 u8PortName , u8 u8PortValue);
 void DIO_vidSetPinValue (u8 u8portName , u8 u8pinNo , u8 u8pinValue );
 u8 DIO_vidGetPortValue(u8 u8PortName);
-u8 DIO_u8GetPinaValue (u8 u8PortName , u8 u8PinNo );
+u8 DIO_u8GetPinValue (u8 u8PortName , u8 u8PinNo );
 void DIO_vidSetLowNibbleValue(u8 u8PortName, u8 u8HighNibbleValue);
 void DIO_vidSetHighNibbleValue(u8 u8PortName, u8 u8HighNibbleValue);
 

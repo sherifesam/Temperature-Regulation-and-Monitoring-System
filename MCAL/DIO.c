@@ -244,7 +244,7 @@ u8 DIO_vidGetPortValue(u8 u8PortName)
 
 
 
-u8 DIO_u8GetPinaValue (u8 u8PortName , u8 u8PinNo )
+u8 DIO_u8GetPinValue (u8 u8PortName , u8 u8PinNo )
 {
 	u8 Value ;
 	switch (u8PortName)
