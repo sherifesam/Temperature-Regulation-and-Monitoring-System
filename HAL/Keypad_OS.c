@@ -12,9 +12,9 @@ void KEYPAD_OS_vidInit(void)
     u8 u8PinNo = 0;
 
     // Initialize the rows...
-    for(u8PinNo = 0; u8PinNo < 4; ++u8PinNo)
+    for(u8PinNo = 0; u8PinNo < NO_OF_ROWS; ++u8PinNo)
     {
-        DIO_vidSetPinDir(R_PORT, Rows[u8PinNo], OUTPUT);
+        DIO_vidSetPinDir(R_PORT, Rows[u8PinNo], INPUT);
         DIO_vidSetPinValue(R_PORT,Rows[u8PinNo],HIGH);
     }
 
