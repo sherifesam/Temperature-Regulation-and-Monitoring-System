@@ -1,24 +1,21 @@
 /*
- * LCD_cfg.h
+ * LCD_Extra.h
  *
- * Created: 6/2/2021 4:36:45 PM
- *  Author: mostafa amr
- */ 
+ *  Created on: Aug 16, 2018
+ *      Author: hp
+ */
+
+#ifndef LCD_EXTRA_H_
+#define LCD_EXTRA_H_
 
 
-#ifndef LCD_CONFIG_H_
-#define LCD_CONFIG_H_
+#define RS_PORT			PORTC
+#define RS_PIN			PIN0
+#define RW_PORT			PORTC
+#define RW_PIN			PIN1
+#define ENABLE_PORT		PORTC
+#define ENABLE_PIN		PIN2
+#define DATA_PORT		PORTD
 
-#define four_bits_mode
 
-#define LCD_DataPort  PORTA
-
-#define LCD_EPort   PORTB
-#define LCD_EPin      PIN0
-
-#define LCD_RSPort    PORTB
-#define LCD_RSPin      PIN1
-
-#define LCD_RWPort    PORTB
-#define LCD_RWPin      PIN2
-#endif /* LCD_CONFIG_H_ */
+#endif /* LCD_EXTRA_H_ */
