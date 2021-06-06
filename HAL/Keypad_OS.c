@@ -1,3 +1,5 @@
+#include "STD_Types.h"
+#include "DIO.h"
 #include "Keypad_OS_cfg.h"
 #include "Keypad_OS.h"
 

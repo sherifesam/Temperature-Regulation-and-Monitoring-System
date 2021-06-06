@@ -8,7 +8,7 @@
 #include "../FreeRTOS/FreeRTOS.h"
 #include "../FreeRTOS/task.h"
 #include "../MCAL/DIO.h"
-#include "LCD_Cfg.h"
+#include "LCD_OS_Cfg.h"
 #include "LCD_OS.h"
 
 
