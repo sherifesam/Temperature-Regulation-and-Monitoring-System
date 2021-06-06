@@ -3,8 +3,6 @@
 static u8 temp_set_OS = 25;
 static u8 num_of_digits_OS = 0;
 static u8 temp_i_OS = 0;
-static u8 get_set_temp_flag = 0;
-
 
 void Keypad_service_OS_Task(void *pvoid)
 {
@@ -32,8 +30,7 @@ void Keypad_service_OS_Task(void *pvoid)
         {
             temp_set_OS = temp_i_OS;
             temp_i_OS = 0;
-			get_set_temp_flag = 1;
-            num_of_digits_OS = 0;
+			num_of_digits_OS = 0;
                 
         }
         vTaskDelay(KEYPAD_SERVICE_PEROIDICTY);
@@ -42,14 +39,5 @@ void Keypad_service_OS_Task(void *pvoid)
 
 u8 get_set_temp_OS(void)
 {
-	if (get_set_temp_flag == 1)
-	{
-		get_set_temp_flag = 0;
-		 return temp_set_OS;
-	}
-	else
-	{
-		return KD_ERROR;
-	}
-   
+	return temp_set_OS;
 }
