@@ -43,26 +43,6 @@ void WRITE_WORD(u8 mode_id, u8 row, u8 col, u8 *i)
 	}
 }
 
-void WRITE_WORD_1(u8 mode_id, u8 row, u8 col)
-{
-	static int j = 0;
-	u8 code = getCursorCommand(row, col+j);
-	while(LOC_vidSendCommand(code) != 1);
-	char *mode = modes[mode_id];
-	if(is_wreq_available())
-	{
-		u8 char_to_be_written = *(mode+j);
-		if(char_to_be_written != '\0')
-		{
-			LCD_OS_WriteChar(char_to_be_written);
-			j++;
-		}
-		else
-		{
-			j = 0;
-		}
-	}
-}
 
 void WRITE_TEMP(u8 set_temp, u8 crt_temp)
 {
