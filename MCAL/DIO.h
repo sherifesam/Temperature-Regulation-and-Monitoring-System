@@ -40,12 +40,12 @@
 
 
 void DIO_vidSetPortDir(u8 u8portName, u8 u8PortDir);
-void DIO_vidSetPinDir(u8 u8portName, u8 u8pinNo , u8 u8PortDir);
+void DIO_vidSetPinDir(u8 u8portName, u8 u8pinNo , u8 u8PinDir);
 void DIO_vidSetPortValue (u8 u8PortName , u8 u8PortValue);
 void DIO_vidSetPinValue (u8 u8portName , u8 u8pinNo , u8 u8pinValue );
 u8 DIO_vidGetPortValue(u8 u8PortName);
 u8 DIO_u8GetPinValue (u8 u8PortName , u8 u8PinNo );
-void DIO_vidSetLowNibbleValue(u8 u8PortName, u8 u8HighNibbleValue);
+void DIO_vidSetLowNibbleValue(u8 u8PortName, u8 u8LowNibbleValue);
 void DIO_vidSetHighNibbleValue(u8 u8PortName, u8 u8HighNibbleValue);
 
 #endif /* DIO_H_ */
