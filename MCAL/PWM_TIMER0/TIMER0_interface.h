@@ -4,10 +4,6 @@
 /* Date       :Jun 3,2021              */
 /* Version    : 1.0v                   */
 /* *********************************** */
-
-#include "STD_TYPES.h"
-#include "macros.h"
-
 #ifndef _TIMER0_INT_H
 #define _TIMER0_INT_H
 
@@ -35,13 +31,13 @@ void TIMER0_void_SetOVCallBack(void (*Copy_ptr) (void) ) ;
 
 void TIMER0_void_SetCTCCallBack(void (*Copy_ptr) (void) ) ;
 
-void timer_CTC_init_interrupt(u8 ocr_val);
+void timer_CTC_init_interrupt(u8 u8_ocr_val);
 
-void timer_wave_nonPWM(u8 ocr_val);
+void timer_wave_nonPWM(u8 u8_ocr_val);
 
-void timer_wave_fastPWM(u8 duty_val);
+void timer_wave_fastPWM(u8 u8_duty_val);
 
-void timer_wave_phasecorrectPWM(u8 duty_val);
+void timer_wave_phasecorrectPWM(u8 u8_duty_val);
 
 
 #endif
