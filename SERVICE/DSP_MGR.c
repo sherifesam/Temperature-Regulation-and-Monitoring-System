@@ -12,7 +12,7 @@ int it = 0;
 
 
 char normal[] =    {'N', 'O', 'R', 'M', 'A', 'L', ' ', ' ', ' ', '\0'};
-char standby[] =   "SET:25    CRT:25";
+char standby[] =   "SET:15    CRT:25";
 char state[] = "STATE:STANDBY";
 char operation[] = {'O', 'P', 'E', 'R', 'A', 'T', 'I', 'O', 'N', '\0'};
 char error[]     = {'E', 'R', 'R', 'O', 'R', ' ', ' ', ' ', ' ', '\0'}; 
@@ -64,52 +64,52 @@ void WRITE_WORD_1(u8 mode_id, u8 row, u8 col)
 	}
 }
 
-void APP_OS_TASK(void* pvoid)
+void WRITE_TEMP(u8 set_temp, u8 crt_temp)
 {
-	u8 i = 0;
-	u8 j = 0;
-	while(1)
+	// working on set_temp...
+	u8 code;
+	static u8 temp_turn = 0;
+	u8 set_temp_ones = set_temp % 10;
+	u8 set_temp_tens = set_temp / 10;
+	static u8 index = 0;
+	if(is_wreq_available() && temp_turn == 0)
 	{
-		if(it < 50)
+		if(index == 0)
 		{
-			if(turn == 0)
-			{
-				WRITE_WORD(STANDBY_ID, 1, 1, &i); // SET:25   CRT:25
-			}
-			else if(turn == 1)
-				WRITE_WORD(STATE_ID, 2, 1, &j);	// STATE:STANDBY
-			turn = (turn + 1)%2;
-		}
-		else if(it<100)
-		{
-			WRITE_WORD(NORMAL_ID, 2, 7, &j);
+			code = getCursorCommand(1, 5);
+			while(LOC_vidSendCommand(code) != 1);
+			LCD_OS_WriteChar(set_temp_tens+48);	
+			index++;
 		}
 		else
 		{
-			WRITE_WORD(ERROR_ID, 2, 7, &j);
+			code = getCursorCommand(1, 6);
+			while(LOC_vidSendCommand(code) != 1);
+			LCD_OS_WriteChar(set_temp_ones+48);
+			index = 0;
+			temp_turn++;
 		}
-		it++;
-		vTaskDelay(100);
+		
 	}
-}
-
-
-
-int main(void)
-{
-	LCD_OS_vidInit();
-	KEYPAD_OS_vidInit();
-	xTaskCreate(KEYPAD_OS_Task,NULL,configMINIMAL_STACK_SIZE,NULL,
-	 			1,NULL);
-
-	xTaskCreate(APP_OS_TASK,NULL,configMINIMAL_STACK_SIZE,NULL,
-	 			2,NULL);
-
-	xTaskCreate(LCD_OS_Task,NULL,configMINIMAL_STACK_SIZE,NULL,
-	 			3,NULL);
-
-	vTaskStartScheduler();
-
-return 1 ;
-
+	u8 crt_temp_ones = crt_temp % 10;
+	u8 crt_temp_tens = crt_temp / 10;
+	static u8 index2 = 0;
+	if(is_wreq_available() && temp_turn == 1)
+	{
+		if(index2 == 0)
+		{
+			code = getCursorCommand(1, 15);
+			while(LOC_vidSendCommand(code) != 1);
+			LCD_OS_WriteChar(crt_temp_tens+48);
+			index2++;
+		}
+		else
+		{
+			code = getCursorCommand(1, 16);
+			while(LOC_vidSendCommand(code) != 1);
+			LCD_OS_WriteChar(crt_temp_ones+48);
+			index2 = 0;
+			temp_turn = 0;
+		}
+	}
 }
