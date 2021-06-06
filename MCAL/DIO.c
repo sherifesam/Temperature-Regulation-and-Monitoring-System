@@ -210,7 +210,7 @@ void DIO_vidSetPinValue (u8 u8portName , u8 u8pinNo , u8 u8pinValue)
 		case PORTA :
 		{
 		    /* [MISRA VIOLATION] RULE(10.5, 12.2): Unsolvable*/
-			assign_bit(PORTA_REGISTER,(u8)u8pinNo,(u8)u8pinValue) ;
+			assign_bit(PORTA_REGISTER,u8pinNo,u8pinValue) ;
 		}break;
 
 		case PORTB :
@@ -277,7 +277,7 @@ u8 DIO_u8GetPinValue (u8 u8PortName , u8 u8PinNo )
 	{
 		case PORTA :
 		{
-			Value =  (u8)(get_bit((u8)PINA_REGISTER, (u8)u8PinNo));
+			Value =  get_bit(PINA_REGISTER, u8PinNo);
 		}break ;
 		case PORTB :
 		{
