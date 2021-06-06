@@ -1,8 +1,6 @@
 #ifndef SERVICE_KEYPAD_OS_H_
 #define SERVICE_KEYPAD_OS_H_
 
-#include "../HAL/Keypad_OS.h"
-
 #define HASH_PRESSED 1
 #define HASH_NOT_PRESSED 0
 #define KEYPAD_SERVICE_PEROIDICTY 50
