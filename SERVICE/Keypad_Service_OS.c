@@ -9,7 +9,7 @@ void Keypad_service_OS_Task(void *pvoid)
     u8 pressed_key = 0;
     while(1)
     {
-        if(num_of_digits_OS < 2)
+		if(num_of_digits_OS < 2)
     	{
             pressed_key = KEYPAD_u8GetPressedKey_OS();
             if(pressed_key != 'A' && pressed_key != '=' && pressed_key != 0)
@@ -25,6 +25,7 @@ void Keypad_service_OS_Task(void *pvoid)
                 }
                 num_of_digits_OS += 1;
             }
+			
 	    }
         if(num_of_digits_OS == 2)
         {
@@ -40,4 +41,9 @@ void Keypad_service_OS_Task(void *pvoid)
 u8 get_set_temp_OS(void)
 {
 	return temp_set_OS;
+}
+
+u8 check_hash_key(void)
+{
+	return  (KEYPAD_u8GetPressedKey_OS() == 'A');
 }
