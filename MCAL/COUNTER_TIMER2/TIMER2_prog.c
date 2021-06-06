@@ -20,87 +20,128 @@ void (*TIMER2_voidCTCCallBack)(void);
 void TIMER2_voidInitialize(void)
 {
 #if _TIMER2_u8_MODE_ ==  TIMER2_u8_NORMAL
+    /* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	clr_bit(TCCR2,6);
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	clr_bit(TCCR2,3);
 
 #elif _TIMER2_u8_MODE_ ==  TIMER2_u8_CTC
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	clr_bit(TCCR2,6);
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	set_bit(TCCR2,3);
 
 #elif _TIMER2_u8_MODE_ ==  TIMER2_u8_FAST_PWM
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	set_bit(TCCR2,6);
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	set_bit(TCCR2,3);
 
 #elif _TIMER2_u8_MODE_ ==  TIMER2_u8_PHASE_CORRECT
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	set_bit(TCCR2,6);
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	clr_bit(TCCR2,3);
 
 #endif
 
 
 #if TIMER2_u8_PRE_SCALAER == TIMER2_u8_DIV_BY_1
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	set_bit(TCCR2,0);
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	clr_bit(TCCR2,1);
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	clr_bit(TCCR2,2);
 
 #elif TIMER2_u8_PRE_SCALAER == TIMER2_u8_DIV_BY_8
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	clr_bit(TCCR2,0);
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	set_bit(TCCR2,1);
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	clr_bit(TCCR2,2);
 
 #elif TIMER2_u8_PRE_SCALAER == TIMER2_u8_DIV_BY_32
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	set_bit(TCCR2,0);
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	set_bit(TCCR2,1);
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	clr_bit(TCCR2,2);
 
 #elif TIMER2_u8_PRE_SCALAER == TIMER2_u8_DIV_BY_64
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	clr_bit(TCCR2,0);
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	clr_bit(TCCR2,1);
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	set_bit(TCCR2,2);
 
 #elif TIMER2_u8_PRE_SCALAER == TIMER2_u8_DIV_BY_128
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	set_bit(TCCR2,0);
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	clr_bit(TCCR2,1);
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	set_bit(TCCR2,2);
 
 #elif TIMER2_u8_PRE_SCALAER == TIMER2_u8_DIV_BY_256
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	clr_bit(TCCR2,0);
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	set_bit(TCCR2,1);
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	set_bit(TCCR2,2);
 
 #elif TIMER2_u8_PRE_SCALAER == TIMER2_u8_DIV_BY_1024
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	set_bit(TCCR2,0);
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	set_bit(TCCR2,1);
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	set_bit(TCCR2,2);
 
 #endif
 
 #if TIMER2_COM_EVENT == TIMER2_u8_NO_ACTION
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	clr_bit(TCCR2,4);
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	clr_bit(TCCR2,5);
 #elif TIMER2_COM_EVENT == TIMER2_u8_TOGGLE
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	set_bit(TCCR2,4);
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	clr_bit(TCCR2,5);
 #elif TIMER2_COM_EVENT == TIMER2_u8_SET
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	clr_bit(TCCR2,4);
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	set_bit(TCCR2,5);
 #elif TIMER2_COM_EVENT == TIMER2_u8_CLEAR
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	set_bit(TCCR2,4);
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	set_bit(TCCR2,5);
 #endif
 
 	TIMER2_voidResetTimerReg();
+	/* [MISRA VIOLATION] RULE(8.6): Prototype is defined in the <avr/interrupt> */
 	sei();
 	TIMER2_voidEnableOvINT();
-	// initialize overflow counter variable
+	/* initialize overflow counter variable */
 	
 
 
 	/* CLEAR FLAG  */
+
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	set_bit(TIFR,6);
+	/* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	set_bit(TIFR,7);
 
-	OCR2=0;
+	OCR2=(u8)0;
 
 
 }
@@ -112,27 +153,31 @@ void TIMER2_voidSetTimerReg(u8 Copy_u8value)
 
 void TIMER2_voidResetTimerReg(void)
 {
-	TCNT2 = 0;
+	TCNT2 = (u8)0;
 }
 
 
 void TIMER2_voidDisableOvINT(void)
 {
+    /* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	clr_bit(TIMSK,6);
 }
 
 void TIMER2_voidEnableOvINT(void)
 {
+    /* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	set_bit(TIMSK,6);
 }
 
 void TIMER2_voidDisableCTCINT(void)
 {
+    /* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	clr_bit(TIMSK,7);
 }
 
 void TIMER2_voidEnableCTCINT(void)
 {
+    /* [MISRA VIOLATION] RULE(10.5): Unsolvable */
 	set_bit(TIMSK,7);
 }
 
@@ -159,22 +204,23 @@ u8 TIMER2_u8GetREGvale(void)
 
 u8 Timer2_count_3Mins(u8 overflow_tot)
 {
-	if (overflow_tot == 255)  // NOTE: '>=' is used
+    /* NOTE: '>=' is used */
+	if (overflow_tot == (u8)255)
 	{
 		TIMER2_voidResetTimerReg();
 		counting_tot_overflow++;
-		if (counting_tot_overflow==255)
+		if (counting_tot_overflow==(u8)255)
 			 {
-				 counting_tot_overflow=0;
+				 counting_tot_overflow = (u8)0;
 				 counter++;
-				 if(counter==194)
+				 if(counter==(u8)194)
 				 {
-					 ThreeMins_flag=1;
-					 counter=0;
+					 ThreeMins_flag = (u8)1;
+					 counter = (u8)0;
 				 }
 			 }
 			 else{
-				 ThreeMins_flag=0;
+				 ThreeMins_flag = (u8)0;
 			 }
 	}
 	return ThreeMins_flag;
