@@ -1,3 +1,4 @@
+#include "../HAL/Keypad_OS.h"
 #include "Keypad_Service_OS.h"
 
 static u8 temp_set_OS = 25;
