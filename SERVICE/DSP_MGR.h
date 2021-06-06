@@ -10,6 +10,7 @@
 #define ERROR_ID            3
 #define INITIAL_STATE_ID    4
 #define INITIAL_TEMP_ID     5
+#define WELCOME_ID     6
 
 
 //char set_temp[] = {'1', '2', '\0'};
@@ -17,5 +18,7 @@
 
 void DISP_WRITE_STATE(u8 mode_id, u8 row, u8 col, u8 *i);
 void DISP_WRITE_TEMP(u8 set_temp, u8 crt_temp);
+u8 IS_WRITING_FINISHED(void);
+void WELCOME_OS_TASK(void* pvoid);
 
 #endif
