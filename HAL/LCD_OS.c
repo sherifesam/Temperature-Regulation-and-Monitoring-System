@@ -12,17 +12,17 @@
 #include "LCD_OS.h"
 
 
-#define lcd_Clear           0x01          /* replace all characters with ASCII 'space'                       */
-#define lcd_Home            0x02          /* return cursor to first position on first line                   */
-#define lcd_EntryMode       0x06          // shift cursor from left to right on read/write
-#define lcd_DisplayOff      0x08          // turn display off
-#define lcd_DisplayOn       0x0C          // display on, cursor off, don't blink character
-#define lcd_FunctionReset   0x30          // reset the LCD
-#define lcd_FunctionSet8bit 0x38          // 8-bit data, 2-line display, 5 x 7 font
-#define lcd_FunctionSet4bit 0x28 
-#define lcd_SetCursor       0x80          // set cursor position
-#define lcd_ShiftRight		0b00011100	//Shift display right without changing DDRAM content
-#define lcd_ShiftLeft		0b00011000	//Shift display left without changing DDRAM content
+#define lcd_Clear           (0x01)          /* replace all characters with ASCII 'space'          */
+#define lcd_Home            (0x02)          /* return cursor to first position on first line      */
+#define lcd_EntryMode       (0x06)          /* shift cursor from left to right on read/write      */
+#define lcd_DisplayOff      (0x08)          /* turn display off                                   */
+#define lcd_DisplayOn       (0x0C)          /* display on, cursor off, don't blink character      */
+#define lcd_FunctionReset   (0x30)          /* reset the LCD                                      */
+#define lcd_FunctionSet8bit (0x38)          /* 8-bit data, 2-line display, 5 x 7 font             */
+#define lcd_FunctionSet4bit (0x28)          /* 4-bit data, 2-line display, 5 x 7 font             */
+#define lcd_SetCursor       (0x80)          /* set cursor position                                */
+#define lcd_ShiftRight		(0b00011100)	/* Shift display right without changing DDRAM content */
+#define lcd_ShiftLeft		(0b00011000)	/* Shift display left without changing DDRAM content  */
 
 /*States*/
 #define STATE_INIT_0	((u8)0)
@@ -47,10 +47,10 @@ extern void LCD_OS_vidInit(void)
 	/*Init DIO Ports*/
 	
 
-	DIO_vidSetPinDir(DATA_PORT,4,OUTPUT);
-	DIO_vidSetPinDir(DATA_PORT,5,OUTPUT);
-	DIO_vidSetPinDir(DATA_PORT,6,OUTPUT);
-	DIO_vidSetPinDir(DATA_PORT,7,OUTPUT);
+	DIO_vidSetPinDir(DATA_PORT,PIN4,OUTPUT);
+	DIO_vidSetPinDir(DATA_PORT,PIN5,OUTPUT);
+	DIO_vidSetPinDir(DATA_PORT,PIN6,OUTPUT);
+	DIO_vidSetPinDir(DATA_PORT,PIN7,OUTPUT);
 	
 
 	DIO_vidSetPinDir(RS_PORT,RS_PIN,OUTPUT);
@@ -58,8 +58,8 @@ extern void LCD_OS_vidInit(void)
 	DIO_vidSetPinDir(ENABLE_PORT,ENABLE_PIN,OUTPUT);
 	DIO_vidSetPinValue(RW_PORT, RW_PIN, LOW);
 	state = STATE_INIT_0;
-	bWriteRequest = 0 ;
-	bInitilized = 0 ;
+	bWriteRequest = (u8)0 ;
+	bInitilized = (u8)0 ;
 }
 
 /* [MISRA VIOLATION] RULE(16.7): It is an RTOS API and a standard definition*/
@@ -142,7 +142,7 @@ void LCD_OS_Task(void* pvoid)
 			    break;
 		}
 
-		vTaskDelay(5);
+		vTaskDelay(LCD_TASK_PERIODICTIY);
 	}
 }
 
