@@ -1,9 +1,7 @@
 #ifndef SERVICE_DSP_OS_H_
 #define SERVICE_DSP_OS_H_
 
-#include "../STD_Types.h"
-#include "../HAL/LCD_OS.h"
-#include "../HAL/Keypad_OS.h"
+#define DSP_MGR_PEROIDICTY ((u32)100)
 
 #define NORMAL_ID           ((u8)0)
 #define STANDBY_ID          ((u8)1)

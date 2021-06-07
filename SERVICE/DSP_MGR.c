@@ -1,5 +1,9 @@
-
+#include "../STD_Types.h"
+#include "../HAL/LCD_OS.h"
+#include "../HAL/Keypad_OS.h"
 #include "DSP_MGR.h"
+#include "../FreeRTOS/FreeRTOS.h"
+#include "../FreeRTOS/task.h"
 
 
 char normal[] =    {'N', 'O', 'R', 'M', 'A', 'L', ' ', ' ', ' ', '\0'};
@@ -25,7 +29,7 @@ void DISP_WRITE_STATE(u8 mode_id, u8 row, u8 col, u8 *i)
 	char *mode = modes[mode_id];
 	if(is_wreq_available())
 	{
-		/* [MISRA VIOLATION] RULE(17.4): It is more convenient to write it this way, and we are sure that i will not pass the possible limit*/
+		/* [MISRA VIOLATION] RULE(17.4): It is more convenient to write it this way, and we are sure that we will not pass the possible limit*/
 		u8 char_to_be_written = *(mode + (*i));
 		if(char_to_be_written != (u8)'\0')
 		{
@@ -276,8 +280,7 @@ void WELCOME_OS_TASK(void* pvoid)
 			default:
 			break;
 		}
-		/* [MISRA VIOLATION] RULE(8.1 8.6): It is an RTOS API and a standard definition */
-		vTaskDelay(100);
+		vTaskDelay(DSP_MGR_PEROIDICTY);
 	}
 }
 
