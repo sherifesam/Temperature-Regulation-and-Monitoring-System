@@ -31,7 +31,6 @@ void TIMER0_void_SetOVCallBack(void (*Copy_ptr) (void) ) ;
 
 void TIMER0_void_SetCTCCallBack(void (*Copy_ptr) (void) ) ;
 
-<<<<<<< HEAD:MCAL/TIMER0_interface.h
 void TIMER0_void_CTC(u8 u8_ocr_val);
 
 void TIMER0_void_nonPWM(u8 u8_ocr_val);
@@ -39,7 +38,7 @@ void TIMER0_void_nonPWM(u8 u8_ocr_val);
 void TIMER0_void_fastPWM(u8 u8_duty_val);
 
 void TIMER0_void_phasecorrectPWM(u8 u8_duty_val);
-=======
+
 void timer_CTC_init_interrupt(u8 u8_ocr_val);
 
 void timer_wave_nonPWM(u8 u8_ocr_val);
@@ -47,7 +46,6 @@ void timer_wave_nonPWM(u8 u8_ocr_val);
 void timer_wave_fastPWM(u8 u8_duty_val);
 
 void timer_wave_phasecorrectPWM(u8 u8_duty_val);
->>>>>>> 0a15d8d38eed37cdd23fc0da873697d4184fd460:MCAL/PWM_TIMER0/TIMER0_interface.h
 
 
 #endif

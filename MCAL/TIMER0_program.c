@@ -5,14 +5,13 @@
 /* Version    : 1.0v                   */
 /* *********************************** */
 
-<<<<<<< HEAD:MCAL/TIMER0_program.c
 #include "../STD_TYPES.h"
 #include "../macros.h"
 #include "../MCAL/DIO.h"
-=======
+
 #include "../../STD_TYPES.h"
 #include "../../macros.h"
->>>>>>> 0a15d8d38eed37cdd23fc0da873697d4184fd460:MCAL/PWM_TIMER0/TIMER0_program.c
+
 #include "TIMER0_interface.h"
 #include "TIMER0_PRIV.h"
 #include "TIMER0_config.h"
