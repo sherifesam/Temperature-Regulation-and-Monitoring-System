@@ -11,34 +11,6 @@
 #include "LCD_OS_Cfg.h"
 #include "LCD_OS.h"
 
-
-#define lcd_Clear           (0x01)          /* replace all characters with ASCII 'space'          */
-#define lcd_Home            (0x02)          /* return cursor to first position on first line      */
-#define lcd_EntryMode       (0x06)          /* shift cursor from left to right on read/write      */
-#define lcd_DisplayOff      (0x08)          /* turn display off                                   */
-#define lcd_DisplayOn       (0x0C)          /* display on, cursor off, don't blink character      */
-#define lcd_FunctionReset   (0x30)          /* reset the LCD                                      */
-#define lcd_FunctionSet8bit (0x38)          /* 8-bit data, 2-line display, 5 x 7 font             */
-#define lcd_FunctionSet4bit (0x28)          /* 4-bit data, 2-line display, 5 x 7 font             */
-#define lcd_SetCursor       (0x80)          /* set cursor position                                */
-#define lcd_ShiftRight		(0b00011100)	/* Shift display right without changing DDRAM content */
-#define lcd_ShiftLeft		(0b00011000)	/* Shift display left without changing DDRAM content  */
-
-/*States*/
-#define STATE_INIT_0	((u8)0)
-#define STATE_INIT_1	((u8)1)
-#define STATE_INIT_2	((u8)2)
-#define STATE_INIT_3	((u8)3)
-#define STATE_INIT_4	((u8)4)
-#define STATE_0			((u8)5)
-#define STATE_1			((u8)6)
-
-#define ON_GOING		((u8)0)
-#define DONE			((u8)1)
-
-#define E_OK ((u8)0)
-#define E_NOK ((u8)1)
-
 static u8 u8Data , bWriteRequest, bInitilized ;
 static u8 state;
 
@@ -177,20 +149,8 @@ u8 LCD_OS_WriteChar_API(void)
 			DIO_vidSetPinValue(ENABLE_PORT, ENABLE_PIN, LOW);
 			char_writing_state = (u8)2;
 		}break;
-
 		
 		case (u8)2:
-		{
-			char_writing_counter++;
-			if(char_writing_counter==(u8)2)
-			{
-				/*10ms elapsed*/
-				char_writing_counter = (u8)0;
-				char_writing_state = (u8)3;
-			}
-		}break;
-		
-		case (u8)3:
 		{
 			
 			/* Load Command on Data bus */
@@ -203,20 +163,20 @@ u8 LCD_OS_WriteChar_API(void)
 			/* Set E to HIGH */
 			DIO_vidSetPinValue(ENABLE_PORT, ENABLE_PIN, HIGH);
 
-			char_writing_state = (u8)4;
+			char_writing_state = (u8)3;
 
 		}break;
 		
 		
-		case (u8)4:
+		case (u8)3:
 		{
 			/* Set E to LOW */
 			DIO_vidSetPinValue(ENABLE_PORT, ENABLE_PIN, LOW);
-			char_writing_state = (u8)5;
+			char_writing_state = (u8)4;
 		}break;
 
 		
-		case (u8)5:
+		case (u8)4:
 		{
 			char_writing_counter++;
 			if(char_writing_counter==(u8)2)
@@ -284,19 +244,8 @@ u8 LOC_vidSendCommand(u8 u8CmdCpy)
 			DIO_vidSetPinValue(ENABLE_PORT, ENABLE_PIN, LOW);
 			send_state = (u8)2 ;
 		}break;
-
-		case (u8)2:
-		{
-			send_counter++;
-			if(send_counter==(u8)2)
-			{
-				/*10ms elapsed*/
-				send_counter = (u8)0;
-				send_state = (u8)3;
-			}
-		}break;
 		
-		case (u8)3:
+		case (u8)2:
 		{
 			
 			/* Load Command on Data bus */
@@ -309,18 +258,18 @@ u8 LOC_vidSendCommand(u8 u8CmdCpy)
 
 			/* Set E to HIGH  */
 			DIO_vidSetPinValue(ENABLE_PORT, ENABLE_PIN, HIGH);
-			send_state = (u8)4;
+			send_state = (u8)3;
 
 		}break;
 
-		case (u8)4:
+		case (u8)3:
 		{
 			/* Set E to LOW */
 			DIO_vidSetPinValue(ENABLE_PORT, ENABLE_PIN, LOW);
-			send_state = (u8)5;
+			send_state = (u8)4;
 		}break;
 
-		case (u8)5:
+		case (u8)4:
 		{
 			send_counter++;
 			if(send_counter==(u8)2)
