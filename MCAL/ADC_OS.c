@@ -31,7 +31,7 @@ void ADC_OS_init(void)
 	set_bit(MADC->ADMUX , ADLAR);
 }
 
-/* [MISRA VIOLATION] RULE(16.7): It is an RTOS API and a standard declaration*/
+/* [MISRA VIOLATION] RULE(16.7): It is an RTOS API and a standard definition*/
 void ADC_OS_Task(void* pvoid)
 {
     u8 high = 0;
@@ -45,7 +45,7 @@ void ADC_OS_Task(void* pvoid)
         /*polling*/
         while(clr_flag)
         {
-           /* [MISRA VIOLATION] RULE(11.3 & 10.5 & 12.6): Unsolvable*/
+           /* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
            clr_flag = is_bit_clr(MADC->ADCSRA,ADIF);
         }
         /* clear ADIF */
@@ -56,7 +56,7 @@ void ADC_OS_Task(void* pvoid)
         high = MADC->ADCH;
         ADC_value = ((f32)high*(f32)5)/(f32)256;
        
-        vTaskDelay((u32)500);
+        vTaskDelay(ADC_TASK_PERIODICTIY);
     }    
 }
 
