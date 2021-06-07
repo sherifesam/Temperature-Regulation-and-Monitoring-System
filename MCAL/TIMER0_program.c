@@ -5,8 +5,9 @@
 /* Version    : 1.0v                   */
 /* *********************************** */
 
-#include "STD_TYPES.h"
-#include "macros.h"
+#include "../STD_TYPES.h"
+#include "../macros.h"
+#include "../MCAL/DIO.h"
 #include "TIMER0_interface.h"
 #include "TIMER0_PRIV.h"
 #include "TIMER0_config.h"
@@ -27,6 +28,7 @@ void TIMER0_void_Init(void)
 		set_bit(TCCR0 , 3);
 		
 	#elif(TIMER0_MODE == TIMER0_FAST_PWM )
+		/* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
 		set_bit(TCCR0 , 6);
 		set_bit(TCCR0 , 3);
 	#elif(TIMER0_MODE == TIMER0_PHASE_PWM )
@@ -41,6 +43,7 @@ void TIMER0_void_Init(void)
 		clr_bit(TCCR0 , 2);
 	
 	#elif(TIMER0_PRESCALER == TIMER0_DIV_BY_8)
+		/* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
 		clr_bit(TCCR0 , 0);
 		set_bit(TCCR0 , 1);
 		clr_bit(TCCR0 , 2);
@@ -70,6 +73,7 @@ void TIMER0_void_Init(void)
 		clr_bit(TCCR0 , 4);
 		set_bit(TCCR0 , 5);
 	#elif(TIMER0_COM_EVENT == TIMER0_SET )
+		/* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
 		set_bit(TCCR0 , 4);
 		set_bit(TCCR0 , 5);
 		
@@ -78,60 +82,69 @@ void TIMER0_void_Init(void)
     TIMER0_void_DisableOVInt();
     TIMER0_void_DisableCTCInt();
 	/*CLEAR FLAGS*/
+    /* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
 	set_bit(TIFR , 0);	
 	set_bit(TIFR , 1);
 	/*Clear register*/
     TIMER0_void_CLRTimerReg();
-    TIMER0_void_CLRCompareVal()	;
+    TIMER0_void_CLRCompareVal();
 }
 
 void TIMER0_void_SetTimerReg(u8 Copy_uint8Val)
 {
-	TCNT0 = Copy_uint8Val ;
+    /* [MISRA VIOLATION] RULE(11.3): Unsolvable*/
+	TCNT0 = Copy_uint8Val;
 }
 
 
 void TIMER0_void_CLRTimerReg(void)
 {
-	TCNT0 = 0 ;
+    /* [MISRA VIOLATION] RULE(11.3): Unsolvable*/
+	TCNT0 = (u8)0;
 }
 
 void TIMER0_void_SetCompareVal(u8 Copy_uint8Val)
 {
-	OCR0 = Copy_uint8Val ;
+    /* [MISRA VIOLATION] RULE(11.3): Unsolvable*/
+	OCR0 = Copy_uint8Val;
 }
-
 
 void TIMER0_void_CLRCompareVal(void)
 {
-	OCR0 = 0 ;
+    /* [MISRA VIOLATION] RULE(11.3): Unsolvable*/
+	OCR0 = (u8)0;
 }
 
 void TIMER0_void_EnableOVInt(void)
 {
+    /* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
 	set_bit(TIMSK , 0);
 }
 
 void TIMER0_void_DisableOVInt(void)
 {
+    /* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
 	clr_bit(TIMSK , 0);
 }
 
 
 void TIMER0_void_EnableCTCInt(void)
 {
+    /* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
 	set_bit(TIMSK , 1);
 }
 
 void TIMER0_void_DisableCTCInt(void)
 {
+    /* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
 	clr_bit(TIMSK , 1);
 }
 
-void timer_CTC_init_interrupt(u8 u8_ocr_val)
+void TIMER0_void_CTC(u8 u8_ocr_val)
 {
 	/* select CTC mode*/
-	set_bit(TCCR0,WGM01);
+    /* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
+	set_bit(TCCR0 , WGM01);
 	/* load a value in OCR0 */
     TIMER0_void_SetCompareVal(u8_ocr_val);
     /* enable interrupt*/
@@ -139,41 +152,40 @@ void timer_CTC_init_interrupt(u8 u8_ocr_val)
 }
 
 
-void timer_wave_nonPWM(u8 u8_ocr_val)
+void TIMER0_void_nonPWM(u8 u8_ocr_val)
 {
 	/* select CTC mode*/
-	set_bit(TCCR0,WGM01);
+    /* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
+	set_bit(TCCR0 , WGM01);
 	/* load a value in OCR0 */
-    if(u8_ocr_val<41)
+    if(u8_ocr_val < ((u8)41))
     {
-        TIMER0_void_SetCompareVal(41);
+        TIMER0_void_SetCompareVal((u8)41);
     }
-    else if(u8_ocr_val>100)
+    else if(u8_ocr_val > ((u8)100))
     {
-        TIMER0_void_SetCompareVal(100);
+        TIMER0_void_SetCompareVal((u8)100);
     }
     else
     {
         TIMER0_void_SetCompareVal(u8_ocr_val);
     }
 	/* toggle OC0 on compare match*/
-	set_bit(TCCR0,COM00);
+    /* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
+	set_bit(TCCR0 , COM00);
 }
 
-void timer_wave_fastPWM(u8 u8_duty_val)
+void TIMER0_void_fastPWM(u8 u8_duty_val)
 {
 
 	/* select fast PWM mode*/
-	set_bit(TCCR0,WGM00);
-	set_bit(TCCR0,WGM01);
+    /* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
+	set_bit(TCCR0 , WGM00);
+	set_bit(TCCR0 , WGM01);
 	/* load a value in OCR0 */
-    if(u8_duty_val<0)
+    if(u8_duty_val > (u8)255)
     {
-	    TIMER0_void_SetCompareVal(0);
-    }
-    else if(u8_duty_val>255)
-    {
-	    TIMER0_void_SetCompareVal(255);
+	    TIMER0_void_SetCompareVal((u8)255);
     }
     else
     {
@@ -183,38 +195,21 @@ void timer_wave_fastPWM(u8 u8_duty_val)
 }
 
 
-void timer_wave_phasecorrectPWM(u8 u8_duty_val)
+void TIMER0_void_phasecorrectPWM(u8 u8_duty_val)
 {
 
 	/* select phase correct PWM mode*/
-	set_bit(TCCR0,WGM00);
+    /* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
+	set_bit(TCCR0 , WGM00);
 	/* load a value in OCR0 */
-    if(u8_duty_val<0)
+	/* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
+    if(u8_duty_val > (u8)255)
     {
-        TIMER0_void_SetCompareVal(0);
-    }
-    else if(u8_duty_val>255)
-    {
-        TIMER0_void_SetCompareVal(255);
+        TIMER0_void_SetCompareVal((u8)255);
     }
     else
     {
         TIMER0_void_SetCompareVal(u8_duty_val);
     }
 
-}
-
-
-void __vector_11(void) __attribute__((signal , used));
-void __vector_11(void)
-{
-	
-	TIMER0_OV_CallBack();
-}
-
-void __vector_10(void) __attribute__((signal , used));
-void __vector_10(void)
-{
-	
-	TIMER0_CTC_CallBack();
 }

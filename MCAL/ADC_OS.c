@@ -8,7 +8,7 @@
 #include "macros.h"
 #include "DIO.h"
 #include "ADC_priv.h"
-#include "ADC.h"
+#include "ADC_OS.h"
 #include "FreeRTOS/FreeRTOS.h"
 
 static f32 ADC_value = 0;
