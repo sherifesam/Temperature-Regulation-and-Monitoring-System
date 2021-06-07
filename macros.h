@@ -8,6 +8,6 @@
 #define get_bit(Data,Bit) ((((u8)Data)>>((u8)Bit))&(u8)1)
 #define assign_bit(Data,Bit,Val) ((((u8)Val)==(u8)1)? (set_bit((Data),(Bit))):(clr_bit((Data),(Bit))))
 #define is_bit_set(Data,Bit)  ((((u8)Data)&((u8)1<<((u8)Bit)))>>((u8)Bit))
-#define is_bit_clr(Data,Bit)  (!((((u8)Data)&((u8)1<<((u8)Bit)))>>((u8)Bit)))
+#define is_bit_clr(Data,Bit)  (~((((u8)Data)&((u8)1<<((u8)Bit)))>>((u8)Bit)))
 
 #endif /* MACROS_H_ */
