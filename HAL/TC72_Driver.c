@@ -1,24 +1,22 @@
-/*
- * TC72_Driver.c
- *
- */
-#define F_CPU 16000000
-
 #include "../STD_Types.h"
-#include "../macros.h"
-
+#include "../MCAL/DIO.h"
 #include "TC72_Driver.h"
 #include "TC72_Driver_cfg.h"
-
 #include "../MCAL/DIO.h"
 #include "../MCAL/SPI.h"
+#include "../FreeRTOS/FreeRTOS.h"
+#include "../FreeRTOS/task.h"
 
-
-#include <util/delay.h>
+static u8 temp_data=0;
 
 
 void TC72_init(void)
 {
+	/* Setting Direction */
+	DIO_vidSetPinDir(TC72_CEPort, TC72_CEPin, OUTPUT);
+	DIO_vidSetPinDir(TC72_SDIPort, TC72_SDIPin, OUTPUT);
+	DIO_vidSetPinDir(TC72_SCKPort, TC72_SCKPin, OUTPUT);
+	
 	DIO_vidSetPinValue(TC72_CEPort,TC72_CEPin, HIGH);
 
 	/*Select Control Register*/
@@ -27,10 +25,9 @@ void TC72_init(void)
 	SPI_SendData(CONTINUOUS_MODE);
 	DIO_vidSetPinValue(TC72_CEPort,TC72_CEPin, LOW);
 
-	_delay_ms(150);
 }
 
-void TC72_readTemperature(s8 * data)
+void TC72_readTemperature(void)
 {
 	DIO_vidSetPinValue(TC72_CEPort,TC72_CEPin, HIGH);
 	/*Read the MSB*/
@@ -40,8 +37,21 @@ void TC72_readTemperature(s8 * data)
 	SPI_SendData(DUMMY_DATA);
 	DIO_vidSetPinValue(TC72_CEPort,TC72_CEPin, LOW);
   
-	_delay_ms(1);
-	*data = SPI_ReceiveData();
-	//return data;
+	temp_data = SPI_ReceiveData();
 
+}
+
+
+void TC72_Task_OS(void *pvoid)
+{
+	while (1)
+	{
+		TC72_readTemperature();
+		vTaskDelay(TC72_TASK_PERIODICTIY);
+	}
+}
+
+u8 get_crt_temp_OS(void)
+{
+	return temp_data;
 }
