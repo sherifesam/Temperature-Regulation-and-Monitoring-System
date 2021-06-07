@@ -7,10 +7,7 @@
 
 #include "../STD_TYPES.h"
 #include "../macros.h"
-#include "../MCAL/DIO.h"
-
-#include "../../STD_TYPES.h"
-#include "../../macros.h"
+#include "DIO.h"
 
 #include "TIMER0_interface.h"
 #include "TIMER0_PRIV.h"
@@ -32,7 +29,7 @@ void TIMER0_void_Init(void)
 		set_bit(TCCR0 , 3);
 		
 	#elif(TIMER0_MODE == TIMER0_FAST_PWM )
-		/* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
+		/* [MISRA VIOLATION] RULE(11.3): bitwise operations inside registers would not result an error*/
 		set_bit(TCCR0 , 6);
 		set_bit(TCCR0 , 3);
 	#elif(TIMER0_MODE == TIMER0_PHASE_PWM )
@@ -47,7 +44,7 @@ void TIMER0_void_Init(void)
 		clr_bit(TCCR0 , 2);
 	
 	#elif(TIMER0_PRESCALER == TIMER0_DIV_BY_8)
-		/* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
+		/* [MISRA VIOLATION] RULE(11.3): bitwise operations inside registers would not result an error*/
 		clr_bit(TCCR0 , 0);
 		set_bit(TCCR0 , 1);
 		clr_bit(TCCR0 , 2);
@@ -77,7 +74,7 @@ void TIMER0_void_Init(void)
 		clr_bit(TCCR0 , 4);
 		set_bit(TCCR0 , 5);
 	#elif(TIMER0_COM_EVENT == TIMER0_SET )
-		/* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
+		/* [MISRA VIOLATION] RULE(11.3): bitwise operations inside registers would not result an error*/
 		set_bit(TCCR0 , 4);
 		set_bit(TCCR0 , 5);
 		
@@ -86,7 +83,7 @@ void TIMER0_void_Init(void)
     TIMER0_void_DisableOVInt();
     TIMER0_void_DisableCTCInt();
 	/*CLEAR FLAGS*/
-    /* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
+    /* [MISRA VIOLATION] RULE(11.3): bitwise operations inside registers would not result an error*/
 	set_bit(TIFR , 0);	
 	set_bit(TIFR , 1);
 	/*Clear register*/
@@ -96,58 +93,58 @@ void TIMER0_void_Init(void)
 
 void TIMER0_void_SetTimerReg(u8 Copy_uint8Val)
 {
-    /* [MISRA VIOLATION] RULE(11.3): Unsolvable*/
+    /* [MISRA VIOLATION] RULE(11.3): writing on register would not result an error*/
 	TCNT0 = Copy_uint8Val;
 }
 
 
 void TIMER0_void_CLRTimerReg(void)
 {
-    /* [MISRA VIOLATION] RULE(11.3): Unsolvable*/
+    /* [MISRA VIOLATION] RULE(11.3): writing on register would not result an error*/
 	TCNT0 = (u8)0;
 }
 
 void TIMER0_void_SetCompareVal(u8 Copy_uint8Val)
 {
-    /* [MISRA VIOLATION] RULE(11.3): Unsolvable*/
+    /* [MISRA VIOLATION] RULE(11.3): writing on register would not result an error*/
 	OCR0 = Copy_uint8Val;
 }
 
 void TIMER0_void_CLRCompareVal(void)
 {
-    /* [MISRA VIOLATION] RULE(11.3): Unsolvable*/
+    /* [MISRA VIOLATION] RULE(11.3): writing on register would not result an error*/
 	OCR0 = (u8)0;
 }
 
 void TIMER0_void_EnableOVInt(void)
 {
-    /* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
+    /* [MISRA VIOLATION] RULE(11.3): bitwise operations inside registers would not result an error*/
 	set_bit(TIMSK , 0);
 }
 
 void TIMER0_void_DisableOVInt(void)
 {
-    /* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
+    /* [MISRA VIOLATION] RULE(11.3): bitwise operations inside registers would not result an error*/
 	clr_bit(TIMSK , 0);
 }
 
 
 void TIMER0_void_EnableCTCInt(void)
 {
-    /* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
+    /* [MISRA VIOLATION] RULE(11.3): bitwise operations inside registers would not result an error*/
 	set_bit(TIMSK , 1);
 }
 
 void TIMER0_void_DisableCTCInt(void)
 {
-    /* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
+    /* [MISRA VIOLATION] RULE(11.3): bitwise operations inside registers would not result an error*/
 	clr_bit(TIMSK , 1);
 }
 
 void TIMER0_void_CTC(u8 u8_ocr_val)
 {
 	/* select CTC mode*/
-    /* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
+    /* [MISRA VIOLATION] RULE(11.3): bitwise operations inside registers would not result an error*/
 	set_bit(TCCR0 , WGM01);
 	/* load a value in OCR0 */
     TIMER0_void_SetCompareVal(u8_ocr_val);
@@ -159,7 +156,7 @@ void TIMER0_void_CTC(u8 u8_ocr_val)
 void TIMER0_void_nonPWM(u8 u8_ocr_val)
 {
 	/* select CTC mode*/
-    /* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
+    /* [MISRA VIOLATION] RULE(11.3): bitwise operations inside registers would not result an error*/
 	set_bit(TCCR0 , WGM01);
 	/* load a value in OCR0 */
     if(u8_ocr_val < ((u8)41))
@@ -175,7 +172,7 @@ void TIMER0_void_nonPWM(u8 u8_ocr_val)
         TIMER0_void_SetCompareVal(u8_ocr_val);
     }
 	/* toggle OC0 on compare match*/
-    /* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
+    /* [MISRA VIOLATION] RULE(11.3): bitwise operations inside registers would not result an error*/
 	set_bit(TCCR0 , COM00);
 }
 
@@ -183,7 +180,7 @@ void TIMER0_void_fastPWM(u8 u8_duty_val)
 {
 
 	/* select fast PWM mode*/
-    /* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
+    /* [MISRA VIOLATION] RULE(11.3): bitwise operations inside registers would not result an error*/
 	set_bit(TCCR0 , WGM00);
 	set_bit(TCCR0 , WGM01);
 	/* load a value in OCR0 */
@@ -203,10 +200,9 @@ void TIMER0_void_phasecorrectPWM(u8 u8_duty_val)
 {
 
 	/* select phase correct PWM mode*/
-    /* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
+    /* [MISRA VIOLATION] RULE(11.3): bitwise operations inside registers would not result an error*/
 	set_bit(TCCR0 , WGM00);
 	/* load a value in OCR0 */
-	/* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
     if(u8_duty_val > (u8)255)
     {
         TIMER0_void_SetCompareVal((u8)255);

@@ -4,8 +4,8 @@
 /* Date       :Jun 3,2021              */
 /* Version    : 1.0v                   */
 /* *********************************** */
-#include "STD_TYPES.h"
-#include "macros.h"
+#include "../STD_TYPES.h"
+#include "../macros.h"
 #include "TIMER2_int.h"
 #include "TIMER2_priv.h"
 #include "TIMER2_config.h"
