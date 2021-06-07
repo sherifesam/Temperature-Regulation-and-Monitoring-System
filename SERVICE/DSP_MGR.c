@@ -1,29 +1,21 @@
 
-#define NORMAL_ID   0
-#define STANDBY_ID   1
-#define OPERATION_ID 2
-#define ERROR_ID     3
-#define SET_ID     4
-#define CRT_ID     5
-#define STATE_ID     6
-
-
-int it = 0;
-
+#include "DSP_MGR.h"
 
 char normal[] =    {'N', 'O', 'R', 'M', 'A', 'L', ' ', ' ', ' ', '\0'};
-char standby[] =   "SET:15    CRT:25";
-char state[] = "STATE:STANDBY";
+char standby[] =   {'S', 'T', 'A', 'N', 'D', 'B', 'Y', ' ', ' ', '\0'};
 char operation[] = {'O', 'P', 'E', 'R', 'A', 'T', 'I', 'O', 'N', '\0'};
-char error[]     = {'E', 'R', 'R', 'O', 'R', ' ', ' ', ' ', ' ', '\0'}; 
-char set_temp[] = {'1', '2', '\0'};
-char crt_temp[] = {'3', '4', '\0'};	
+char error[]     = {'E', 'R', 'R', 'O', 'R', ' ', ' ', ' ', ' ', '\0'};
+char welcome[]   = {' ', ' ',' ',' ',' ',' ',' ',' ',' ','W', 'E', 'L', 'C', 'O', 'M', 'E', '\0'};
 
-char* modes[] = {normal, standby, operation, error, set_temp, crt_temp, state};
+char initial_temp[] = "SET:15    CRT:25";
+char initial_state[] = "STATE:STANDBY";
 
-char turn = 0;
 
-void WRITE_WORD(u8 mode_id, u8 row, u8 col, u8 *i)
+char* modes[] = {normal, standby, operation, error, initial_state, initial_temp, welcome};
+
+static u8 DISP_FIN_WRITING = 0;
+
+void DISP_WRITE_STATE(u8 mode_id, u8 row, u8 col, u8 *i)
 {
 	u8 code = getCursorCommand(row, col+(*i));
 	while(LOC_vidSendCommand(code) != 1);
@@ -33,18 +25,19 @@ void WRITE_WORD(u8 mode_id, u8 row, u8 col, u8 *i)
 		u8 char_to_be_written = *(mode+(*i));
 		if(char_to_be_written != '\0')
 		{
+			DISP_FIN_WRITING = 0;
 			LCD_OS_WriteChar(char_to_be_written);
 			(*i) = (*i) + 1;
 		}
 		else
 		{
 			(*i) = 0;
+			DISP_FIN_WRITING = 1;
 		}
 	}
 }
 
-
-void WRITE_TEMP(u8 set_temp, u8 crt_temp)
+void DISP_WRITE_TEMP(u8 set_temp, u8 crt_temp)
 {
 	// working on set_temp...
 	u8 code;
@@ -71,6 +64,7 @@ void WRITE_TEMP(u8 set_temp, u8 crt_temp)
 		}
 		
 	}
+	// working on crt_temp...
 	u8 crt_temp_ones = crt_temp % 10;
 	u8 crt_temp_tens = crt_temp / 10;
 	static u8 index2 = 0;
@@ -92,4 +86,146 @@ void WRITE_TEMP(u8 set_temp, u8 crt_temp)
 			temp_turn = 0;
 		}
 	}
+}
+
+void WELCOME_OS_TASK(void* pvoid)
+{
+	u8 i = 0;
+	u8 WELCOME_STATE = 0;
+	u8 WELCOME_IT = 0;
+	u8 WELCOME_CTR = 0;
+
+	while(1)
+	{
+		//DISP_WRITE_STATE(WELCOME_ID, 1, 1, &i);
+		switch(WELCOME_STATE)
+		{
+			case 0:
+			{
+				DISP_WRITE_STATE(WELCOME_ID, 1, 1, &WELCOME_IT);
+				if(IS_WRITING_FINISHED() == 1)
+				{
+					WELCOME_STATE++;	
+				}
+			}
+			break;
+			
+			case 1:
+			{
+				while(LOC_vidSendCommand(0x18) != 1);
+				WELCOME_CTR++;
+				if(WELCOME_CTR == 9)
+				{
+					WELCOME_CTR = 0;
+					WELCOME_STATE++;
+				}
+			}
+			break;
+			case 2:
+			{
+				while(LOC_vidSendCommand(0x1c) != 1);
+				WELCOME_CTR++;
+				if(WELCOME_CTR == 9)
+				{
+					WELCOME_CTR = 0;
+					WELCOME_STATE++;
+				}
+			}
+			break;
+			case 3:
+			{
+				while(LOC_vidSendCommand(0x18) != 1);
+				WELCOME_CTR++;
+				if(WELCOME_CTR == 9)
+				{
+					WELCOME_CTR = 0;
+					WELCOME_STATE++;
+				}
+			}
+			case 4:
+			{
+				while(LOC_vidSendCommand(0x1c) != 1);
+				WELCOME_CTR++;
+				if(WELCOME_CTR == 9)
+				{
+					WELCOME_CTR = 0;
+					WELCOME_STATE++;
+				}
+			}
+			break;
+			case 5:
+			{
+				while(LOC_vidSendCommand(0x18) != 1);
+				WELCOME_CTR++;
+				if(WELCOME_CTR == 9)
+				{
+					WELCOME_CTR = 0;
+					WELCOME_STATE++;
+				}
+			}
+			break;
+			case 6:
+			{
+				while(LOC_vidSendCommand(0x1c) != 1);
+				WELCOME_CTR++;
+				if(WELCOME_CTR == 9)
+				{
+					WELCOME_CTR = 0;
+					WELCOME_STATE++;
+				}
+			}
+			break;
+			case 7:
+			{
+				while(LOC_vidSendCommand(0x18) != 1);
+				WELCOME_CTR++;
+				if(WELCOME_CTR == 9)
+				{
+					WELCOME_CTR = 0;
+					WELCOME_STATE++;
+				}
+			}
+			break;
+			case 8:
+			{
+				while(LOC_vidSendCommand(0x1c) != 1);
+				WELCOME_CTR++;
+				if(WELCOME_CTR == 10)
+				{
+					WELCOME_CTR = 0;
+					WELCOME_STATE++;
+				}
+			}
+			break;
+			case 9:
+			{
+				WELCOME_CTR++;
+				if(WELCOME_CTR == 10)
+				{
+					WELCOME_CTR = 0;
+					WELCOME_STATE++;
+				}
+			}
+			break;
+			case 10:
+			{
+				while(LOC_vidSendCommand(0x01) != 1);
+				WELCOME_STATE++;
+			}
+			break;
+		}
+		vTaskDelay(100);	
+	}
+	
+}
+
+u8 IS_WRITING_FINISHED(void)
+{
+	u8 cond = 0;
+	if(DISP_FIN_WRITING == 1)
+	{
+		cond = 1;
+		DISP_FIN_WRITING = 0;
+	}
+	return cond;
 }

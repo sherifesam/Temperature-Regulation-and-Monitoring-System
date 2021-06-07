@@ -7,6 +7,8 @@
 #ifndef _ADC_OS_H
 #define _ADC_OS_H
 
+#define ADC_TASK_PERIODICTIY    ((u32)500)
+
 void ADC_OS_init(void);
 void ADC_OS_Task(void* pvoid);
 f32 ADC_OS_GetValue(void);

@@ -2,31 +2,35 @@
  * DIO.c
  *
  */
-#include "STD_Types.h"
-#include "DIO.h"
-#include "macros.h"
+#include "../STD_Types.h"
+#include "../MCAL/DIO.h"
+#include "../macros.h"
 
 /*Local defines*/
 
-/*PORTA Registers*/
-#define DDRA_REGISTER  *((volatile u8*) 0x3A)
-#define PORTA_REGISTER  *((volatile u8*) 0x3B)
-#define PINA_REGISTER    *((volatile u8*) 0x39)
+
+/* [VIOLATION-MISRA] 1.10: Unresovlved Adressing Macros...From Eng. Hossam */
+
+/* PORTA Registers*/
+
+#define DDRA_REGISTER  (*((volatile u8*) 0x3A))
+#define PORTA_REGISTER  (*((volatile u8*) 0x3B))
+#define PINA_REGISTER    (*((volatile u8*) 0x39))
 
 /*PORTB Registers*/
-#define DDRB_REGISTER  *((volatile u8*) 0x37)
-#define PORTB_REGISTER  *((volatile u8*) 0x38)
-#define PINB_REGISTER    *((volatile u8*) 0x36)
+#define DDRB_REGISTER  (*((volatile u8*) 0x37))
+#define PORTB_REGISTER  (*((volatile u8*) 0x38))
+#define PINB_REGISTER    (*((volatile u8*) 0x36))
 
 /*PORTC Registers*/
-#define DDRC_REGISTER  *((volatile u8*) 0x34)
-#define PORTC_REGISTER  *((volatile u8*) 0x35)
-#define PINC_REGISTER    *((volatile u8*) 0x33)
+#define DDRC_REGISTER  (*((volatile u8*) 0x34))
+#define PORTC_REGISTER  (*((volatile u8*) 0x35))
+#define PINC_REGISTER    (*((volatile u8*) 0x33))
 
 /*PORTD Registers*/
-#define DDRD_REGISTER  *((volatile u8*) 0x31)
-#define PORTD_REGISTER  *((volatile u8*) 0x32)
-#define PIND_REGISTER    *((volatile u8*) 0x30)
+#define DDRD_REGISTER  (*((volatile u8*) 0x31))
+#define PORTD_REGISTER  (*((volatile u8*) 0x32))
+#define PIND_REGISTER    (*((volatile u8*) 0x30))
 
 
 
@@ -38,11 +42,11 @@ void DIO_vidSetPortDir(u8 u8portName, u8 u8PortDir)
 		{
 			if(u8PortDir == INPUT)
 			{
-				DDRA_REGISTER = 0x00 ;
+				DDRA_REGISTER = (u8)0x00 ;
 			}
-			else /*Direction is output*/
+			else
 			{
-				DDRA_REGISTER = 0xFF ;
+				DDRA_REGISTER = (u8)0xFF ;
 			}
 		}break;
 
@@ -50,11 +54,11 @@ void DIO_vidSetPortDir(u8 u8portName, u8 u8PortDir)
 		{
 			if(u8PortDir == INPUT)
 			{
-				DDRB_REGISTER = 0x00 ;
+				DDRB_REGISTER = (u8)0x00 ;
 			}
-			else /*Direction is output*/
+			else
 			{
-				DDRB_REGISTER = 0xFF ;
+				DDRB_REGISTER = (u8)0xFF ;
 			}
 		}break;
 
@@ -62,11 +66,11 @@ void DIO_vidSetPortDir(u8 u8portName, u8 u8PortDir)
 		{
 			if(u8PortDir == INPUT)
 			{
-				DDRC_REGISTER = 0x00 ;
+				DDRC_REGISTER = (u8)0x00 ;
 			}
-			else /*Direction is output*/
+			else
 			{
-				DDRC_REGISTER = 0xFF ;
+				DDRC_REGISTER = (u8)0xFF;
 			}
 		}break;
 
@@ -74,13 +78,16 @@ void DIO_vidSetPortDir(u8 u8portName, u8 u8PortDir)
 		{
 			if(u8PortDir == INPUT)
 			{
-				DDRD_REGISTER = 0x00 ;
+				DDRD_REGISTER = (u8)0x00;
 			}
-			else /*Direction is output*/
+			else
 			{
-				DDRD_REGISTER = 0xFF ;
+				DDRD_REGISTER = (u8)0xFF ;
 			}
 		}break;
+
+		default:
+		    break;
 	}
 }
 
@@ -93,6 +100,7 @@ void DIO_vidSetPinDir(u8 u8portName, u8 u8pinNo , u8 u8PinDir){
 		{
 			if (u8PinDir == INPUT)
 			{
+			    /* [MISRA VIOLATION] RULE(10.5): Unsolvable*/
 				clr_bit(DDRA_REGISTER ,u8pinNo);
 			}
 			else if (u8PinDir == OUTPUT)
@@ -110,11 +118,13 @@ void DIO_vidSetPinDir(u8 u8portName, u8 u8pinNo , u8 u8PinDir){
 		{
 			if (u8PinDir == INPUT)
 			{
+			    /* [MISRA VIOLATION] RULE(10.5): Unsolvable*/
 				clr_bit(DDRB_REGISTER ,u8pinNo);
 			}
 			else if (u8PinDir == OUTPUT)
 			{
-				set_bit(DDRB_REGISTER , u8pinNo );
+			    /* [MISRA VIOLATION] RULE(10.5): Unsolvable*/
+				set_bit(DDRB_REGISTER , u8pinNo);
 			}
 			else
 			{
@@ -126,10 +136,12 @@ void DIO_vidSetPinDir(u8 u8portName, u8 u8pinNo , u8 u8PinDir){
 		{
 			if (u8PinDir == INPUT)
 			{
+			    /* [MISRA VIOLATION] RULE(10.5): Unsolvable*/
 				clr_bit(DDRC_REGISTER ,u8pinNo);
 			}
 			else if (u8PinDir == OUTPUT)
 			{
+			    /* [MISRA VIOLATION] RULE(10.5): Unsolvable*/
 				set_bit(DDRC_REGISTER , u8pinNo );
 			}
 			else
@@ -142,10 +154,12 @@ void DIO_vidSetPinDir(u8 u8portName, u8 u8pinNo , u8 u8PinDir){
 		{
 			if (u8PinDir == INPUT)
 			{
+			    /* [MISRA VIOLATION] RULE(10.5): Unsolvable*/
 				clr_bit(DDRD_REGISTER ,u8pinNo);
 			}
 			else if (u8PinDir == OUTPUT)
 			{
+			    /* [MISRA VIOLATION] RULE(10.5): Unsolvable*/
 				set_bit(DDRD_REGISTER , u8pinNo );
 			}
 			else
@@ -153,6 +167,8 @@ void DIO_vidSetPinDir(u8 u8portName, u8 u8pinNo , u8 u8PinDir){
 				/*Invalid Input*/
 			}
 		}break;
+		default:
+		    break;
 	}
 }
 
@@ -180,6 +196,8 @@ void DIO_vidSetPortValue (u8 u8PortName , u8 u8PortValue)
 		{
 			PORTD_REGISTER = u8PortValue;
 		}break ;
+		default:
+		    break;
 	}
 }
 
@@ -191,23 +209,29 @@ void DIO_vidSetPinValue (u8 u8portName , u8 u8pinNo , u8 u8pinValue)
 	{
 		case PORTA :
 		{
+		    /* [MISRA VIOLATION] RULE(10.5, 12.2): Unsolvable*/
 			assign_bit(PORTA_REGISTER,u8pinNo,u8pinValue) ;
 		}break;
 
 		case PORTB :
 		{
+		    /* [MISRA VIOLATION] RULE(10.5, 12.2): Unsolvable*/
 			assign_bit(PORTB_REGISTER,u8pinNo,u8pinValue) ;
 		}break ;
 
 		case PORTC :
 		{
+		    /* [MISRA VIOLATION] RULE(10.5, 12.2): Unsolvable*/
 			assign_bit(PORTC_REGISTER,u8pinNo,u8pinValue) ;
 		}break ;
 
 		case PORTD :
 		{
+		    /* [MISRA VIOLATION] RULE(10.5, 12.2): Unsolvable*/
 			assign_bit(PORTD_REGISTER,u8pinNo,u8pinValue) ;
 		}break;
+		default:
+		    break;
 	}
 }
 
@@ -237,6 +261,8 @@ u8 DIO_vidGetPortValue(u8 u8PortName)
 		{
 			retVal = PIND_REGISTER;
 		}break ;
+		default:
+		    break;
 	}
 
 	return retVal;
@@ -266,6 +292,8 @@ u8 DIO_u8GetPinValue (u8 u8PortName , u8 u8PinNo )
 		{
 			Value =  get_bit(PIND_REGISTER, u8PinNo);
 		}break ;
+		default:
+		    break;
 	}
 
 	return Value ;
@@ -273,21 +301,35 @@ u8 DIO_u8GetPinValue (u8 u8PortName , u8 u8PinNo )
 
 void DIO_vidSetLowNibbleValue(u8 u8PortName, u8 u8LowNibbleValue)
 {
-	u8LowNibbleValue &= 0x0f;
+	u8LowNibbleValue &= (u8)0x0f;
 	switch(u8PortName)
 	{
 		case PORTA:
-		PORTA_REGISTER &= 0xf0;
-		PORTA_REGISTER |= u8LowNibbleValue;
+		{
+		    PORTA_REGISTER &= (u8)0xf0;
+            PORTA_REGISTER |= u8LowNibbleValue;
+		}
+		break;
 		case PORTB:
-		PORTB_REGISTER &= 0xf0;
-		PORTB_REGISTER |= u8LowNibbleValue;
+		{
+		    PORTB_REGISTER &= (u8)0xf0;
+            PORTB_REGISTER |= u8LowNibbleValue;
+		}
+		break;
 		case PORTC:
-		PORTC_REGISTER &= 0xf0;
-		PORTC_REGISTER |= u8LowNibbleValue;
+		{
+		    PORTC_REGISTER &= (u8)0xf0;
+            PORTC_REGISTER |= u8LowNibbleValue;
+		}
+		break;
 		case PORTD:
-		PORTD_REGISTER &= 0xf0;
-		PORTD_REGISTER |= u8LowNibbleValue;
+		{
+		    PORTD_REGISTER &= (u8)0xf0;
+            PORTD_REGISTER |= u8LowNibbleValue;
+		}
+		break;
+		default:
+		    break;
 	}
 }
 
@@ -297,17 +339,31 @@ void DIO_vidSetHighNibbleValue(u8 u8PortName, u8 u8HighNibbleValue)
 	switch(u8PortName)
 	{
 		case PORTA:
-		PORTA_REGISTER &= 0x0f;
-		PORTA_REGISTER |= u8HighNibbleValue;
+		{
+            PORTA_REGISTER &= (u8)0x0f;
+            PORTA_REGISTER |= u8HighNibbleValue;
+		}
+		break;
 		case PORTB:
-		PORTB_REGISTER &= 0x0f;
-		PORTB_REGISTER |= u8HighNibbleValue;
+		{
+		    PORTB_REGISTER &= (u8)0x0f;
+            PORTB_REGISTER |= u8HighNibbleValue;
+		}
+		break;
 		case PORTC:
-		PORTC_REGISTER &= 0x0f;
-		PORTC_REGISTER |= u8HighNibbleValue;
+		{
+		    PORTC_REGISTER &= (u8)0x0f;
+            PORTC_REGISTER |= u8HighNibbleValue;
+		}
+		break;
 		case PORTD:
-		PORTD_REGISTER &= 0x0f;
-		PORTD_REGISTER |= u8HighNibbleValue;
+		{
+		    PORTD_REGISTER &= (u8)0x0f;
+            PORTD_REGISTER |= u8HighNibbleValue;
+		}
+		break;
+		default:
+		    break;
 	}
 }
 

@@ -15,7 +15,6 @@ typedef struct{
 }ADC;
 
 /* M is Refer To MCal */
-
 #define MADC ((volatile ADC *)0x24)
 
 /* ADCSRA */

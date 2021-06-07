@@ -14,7 +14,7 @@
 	   TIMER2_u8_PHASE_CORRECT
 
  */
-#define _TIMER2_u8_MODE_   TIMER2_u8_CTC
+#define _TIMER2_u8_MODE_   (TIMER2_u8_CTC)
 
 /*
  *
@@ -27,7 +27,7 @@
 	TIMER2_u8_DIV_BY_1024
  */
 
-#define TIMER2_u8_PRE_SCALAER  TIMER2_u8_DIV_BY_256
+#define TIMER2_u8_PRE_SCALAER  (TIMER2_u8_DIV_BY_256)
 
 
 /*
@@ -37,6 +37,6 @@
    TIMER2_u8_CLEAR
  */
 
-#define TIMER2_COM_EVENT  TIMER2_u8_SET
+#define TIMER2_COM_EVENT  (TIMER2_u8_SET)
 
 #endif /* TIMER2_CONFIG_H_ */

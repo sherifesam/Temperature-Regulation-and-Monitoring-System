@@ -4,12 +4,17 @@
  * Created: 6/4/2021 6:04:15 PM
  * Author : mostafa amr
  */ 
-#include "STD_Types.h"
-#include "macros.h"
-#include "DIO.h"
+#include "../STD_Types.h"
+#include "../macros.h"
+#include "DIO.h"    
 #include "ADC_priv.h"
 #include "ADC_OS.h"
+<<<<<<< HEAD
 #include "FreeRTOS/FreeRTOS.h"
+=======
+#include "../FreeRTOS/FreeRTOS.h"
+#include "../FreeRTOS/task.h"
+>>>>>>> 0a15d8d38eed37cdd23fc0da873697d4184fd460
 
 static f32 ADC_value = 0;
 
@@ -19,31 +24,43 @@ void ADC_OS_init(void)
 	DIO_vidSetPinDir(PORTA, PIN0, INPUT);
 
 	/*ADC ON*/
-	set_bit(MADC->ADCSRA,ADEN);
+	/* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
+	set_bit(MADC->ADCSRA , ADEN);
 	/*V reference*/
-	set_bit(MADC->ADMUX,REFS0);
+	/* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
+	set_bit(MADC->ADMUX , REFS0);
 
 	/*READ ADCH ONLY*/
-	set_bit(MADC->ADMUX,ADLAR);
+	/* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
+	set_bit(MADC->ADMUX , ADLAR);
 }
 
+/* [MISRA VIOLATION] RULE(16.7): It is an RTOS API and a standard definition*/
 void ADC_OS_Task(void* pvoid)
 {
-    u8 high;
+    u8 high = 0;
+    u8 clr_flag = 0;
     while (1)
     {
         /*start conversion*/
-        set_bit(MADC->ADCSRA,ADSC);
+        /* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
+        set_bit(MADC->ADCSRA , ADSC);
 
         /*polling*/
-        while(is_bit_clr(MADC->ADCSRA,ADIF));
+        while(clr_flag)
+        {
+           /* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
+           clr_flag = is_bit_clr(MADC->ADCSRA,ADIF);
+        }
         /* clear ADIF */
+        /* [MISRA VIOLATION] RULE(11.3 & 10.5): Unsolvable*/
         set_bit(MADC->ADCSRA,ADIF);
 
+        /* [MISRA VIOLATION] RULE(11.3): Unsolvable*/
         high = MADC->ADCH;
-        ADC_value = (high*5)/256;
+        ADC_value = ((f32)high*(f32)5)/(f32)256;
        
-        vTaskDelay(500); 
+        vTaskDelay(ADC_TASK_PERIODICTIY);
     }    
 }
 
