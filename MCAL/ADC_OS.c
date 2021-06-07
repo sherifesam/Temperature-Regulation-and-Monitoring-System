@@ -4,13 +4,13 @@
  * Created: 6/4/2021 6:04:15 PM
  * Author : mostafa amr
  */ 
-#include "STD_Types.h"
-#include "macros.h"
+#include "../STD_Types.h"
+#include "../macros.h"
 #include "DIO.h"    
 #include "ADC_priv.h"
 #include "ADC_OS.h"
-#include "FreeRTOS/FreeRTOS.h"
-#include "FreeRTOS/task.h"
+#include "../FreeRTOS/FreeRTOS.h"
+#include "../FreeRTOS/task.h"
 
 static f32 ADC_value = 0;
 

@@ -1,5 +1,5 @@
-#include "STD_Types.h"
-#include "macros.h"
+#include "../STD_Types.h"
+#include "../macros.h"
 #include "DIO.h"
 #include "SPI_priv.h"
 #include "SPI.h"

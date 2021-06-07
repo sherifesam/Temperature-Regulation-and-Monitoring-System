@@ -5,8 +5,8 @@
 /* Version    : 1.0v                   */
 /* *********************************** */
 
-#include "STD_TYPES.h"
-#include "macros.h"
+#include "../../STD_TYPES.h"
+#include "../../macros.h"
 #include "TIMER0_interface.h"
 #include "TIMER0_PRIV.h"
 #include "TIMER0_config.h"
