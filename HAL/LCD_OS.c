@@ -39,10 +39,6 @@
 #define E_OK ((u8)0)
 #define E_NOK ((u8)1)
 
-static void LOC_vidWriteChar_Step1(void);
-static void LOC_vidWriteChar_Step2(void);
-
-
 static u8 u8Data , bWriteRequest, bInitilized ;
 static u8 state;
 
@@ -66,10 +62,11 @@ extern void LCD_OS_vidInit(void)
 	bInitilized = 0 ;
 }
 
+/* [MISRA VIOLATION] RULE(16.7): It is an RTOS API and a standard definition*/
 void LCD_OS_Task(void* pvoid)
 {
-	u8 retVal ;
-	u8 w_retVal;
+	u8 LCD_OS_retVal ;
+	u8 LCD_OS_w_retVal;
 
 	while(1)
 	{
@@ -79,76 +76,85 @@ void LCD_OS_Task(void* pvoid)
 			case STATE_INIT_0:
 			{
 				/* Function Set  */
-				retVal = LOC_vidSendCommand(lcd_Home);
-				if(retVal == DONE)
-					state = STATE_INIT_1 ;
+			    LCD_OS_retVal = LOC_vidSendCommand((u8)lcd_Home);
+				if(LCD_OS_retVal == DONE)
+				{
+				    state = STATE_INIT_1 ;
+				}
 			}break;
 			
 			case STATE_INIT_1:
 			{
 				/* Function Set  */
-				retVal = LOC_vidSendCommand(lcd_FunctionSet4bit);
-				if(retVal == DONE)
-					state = STATE_INIT_2 ;
+			    LCD_OS_retVal = LOC_vidSendCommand((u8)lcd_FunctionSet4bit);
+				if(LCD_OS_retVal == DONE)
+				{
+				    state = STATE_INIT_2;
+				}
 			}break;
 
 			case STATE_INIT_2:
 			{
 				/* Display ON OFF Control */
-				retVal = LOC_vidSendCommand(lcd_DisplayOn);
-				if(retVal == DONE)
-					state = STATE_INIT_3 ;
+			    LCD_OS_retVal = LOC_vidSendCommand((u8)lcd_DisplayOn);
+				if(LCD_OS_retVal == DONE)
+				{
+				    state = STATE_INIT_3;
+				}
 			}break;
 
 			case STATE_INIT_3:
 			{
 				/* Clear Display */
-				retVal = LOC_vidSendCommand(lcd_Clear);
-				if(retVal == DONE)
-					state = STATE_INIT_4;
+			    LCD_OS_retVal = LOC_vidSendCommand((u8)lcd_Clear);
+				if(LCD_OS_retVal == DONE)
+				{
+				    state = STATE_INIT_4;
+				}
 			}break;
 
 			case STATE_INIT_4:
 			{
 				/* Entry Mode Set  */
-				retVal = LOC_vidSendCommand(lcd_EntryMode);
-				if(retVal == DONE)
+			    LCD_OS_retVal = LOC_vidSendCommand((u8)lcd_EntryMode);
+				if(LCD_OS_retVal == DONE)
 				{
-					state = STATE_0 ;
-					bInitilized = 1;
+				    state = STATE_0 ;
+					bInitilized = (u8)1;
 				}
 			}break;
 
 			case STATE_0 :
 			{
-				if(bWriteRequest == 1)
+				if(bWriteRequest == (u8)1)
 				{
-					w_retVal = LCD_OS_WriteChar_API();
-					if(w_retVal == DONE)
+				    LCD_OS_w_retVal = (u8)LCD_OS_WriteChar_API();
+					if(LCD_OS_w_retVal == DONE)
 					{
-						state = STATE_0 ;
-						bWriteRequest = 0 ;
+					    state = STATE_0 ;
+						bWriteRequest = (u8)0;
 					}
 				}
 
 			}break;
 
+			default:
+			    break;
 		}
 
 		vTaskDelay(5);
 	}
 }
 
-
 u8 LCD_OS_WriteChar_API(void)
 {
-	static u8 state = 0;
-	static u8 counter = 0;
-	u8 retVal = ON_GOING;
+	static u8 char_writing_state = (u8)0;
+	static u8 char_writing_counter = (u8)0;
+	u8 char_writing_retVal = ON_GOING;
 
-	switch (state)
+	switch (char_writing_state)
 	{
-		case 0 :
+		case (u8)0:
 		{
 			
 			/* Load Command on Data bus */
@@ -160,31 +166,31 @@ u8 LCD_OS_WriteChar_API(void)
 			/* Set E to HIGH */
 			DIO_vidSetPinValue(ENABLE_PORT, ENABLE_PIN, HIGH);
 
-			state = 1 ;
+			char_writing_state = (u8)1;
 
 		}break;
 		
 		
-		case 1:
+		case (u8)1:
 		{
 			/* Set E to LOW */
 			DIO_vidSetPinValue(ENABLE_PORT, ENABLE_PIN, LOW);
-			state = 2;
+			char_writing_state = (u8)2;
 		}break;
 
 		
-		case 2:
+		case (u8)2:
 		{
-			counter++;
-			if(counter==2)
+			char_writing_counter++;
+			if(char_writing_counter==(u8)2)
 			{
 				/*10ms elapsed*/
-				counter = 0 ;
-				state = 3;
+				char_writing_counter = (u8)0;
+				char_writing_state = (u8)3;
 			}
 		}break;
-	
-		case 3:
+		
+		case (u8)3:
 		{
 			
 			/* Load Command on Data bus */
@@ -197,82 +203,65 @@ u8 LCD_OS_WriteChar_API(void)
 			/* Set E to HIGH */
 			DIO_vidSetPinValue(ENABLE_PORT, ENABLE_PIN, HIGH);
 
-			state = 4;
+			char_writing_state = (u8)4;
 
 		}break;
 		
 		
-		case 4:
+		case (u8)4:
 		{
 			/* Set E to LOW */
 			DIO_vidSetPinValue(ENABLE_PORT, ENABLE_PIN, LOW);
-			state = 5;
+			char_writing_state = (u8)5;
 		}break;
 
 		
-		case 5:
+		case (u8)5:
 		{
-			counter++;
-			if(counter==2)
+			char_writing_counter++;
+			if(char_writing_counter==(u8)2)
 			{
 				/*10ms elapsed*/
-				counter = 0 ;
-				state = 0 ;
-				retVal = DONE;
+				char_writing_counter = (u8)0;
+				char_writing_state = (u8)0;
+				char_writing_retVal = DONE;
 			}
 		}break;
+
+		default:
+		break;
 	}
 
 
-	return retVal;
-
+	return char_writing_retVal;
 }
 
 extern u8 LCD_OS_WriteChar(u8 ch)
 {
-	if((bInitilized == 1)&&(bWriteRequest==0))
+	u8 writing_state = E_NOK;
+	if((bInitilized == (u8)1)&&(bWriteRequest==(u8)0))
 	{
-		bWriteRequest = 1;
+		bWriteRequest = (u8)1;
 		u8Data = ch;
-		return E_OK;
+		writing_state = E_OK;
 	}
 	else
-		return E_NOK;
-
-}
-static void LOC_vidWriteChar_Step1()
-{
-	/* Set RS to HIG */
-	DIO_vidSetPinValue(RS_PORT, RS_PIN, HIGH);
-
-	/* Set R/W to LOW */
-	DIO_vidSetPinValue(RW_PORT, RW_PIN, LOW);
-
-	/* Set E to HIGH */
-	DIO_vidSetPinValue(ENABLE_PORT, ENABLE_PIN, HIGH);
-
-	/* Load Command on Data bus */
-	DIO_vidSetPortValue(DATA_PORT, u8Data);
-
-	/* Set E to LOW */
-	DIO_vidSetPinValue(ENABLE_PORT, ENABLE_PIN, LOW);
+	{
+		writing_state = E_NOK;
+	}
+	return writing_state;
 }
 
-static void LOC_vidWriteChar_Step2(void)
-{
-	/* Set E to HIGH */
-	DIO_vidSetPinValue(ENABLE_PORT, ENABLE_PIN, HIGH);
-}
 
 u8 LOC_vidSendCommand(u8 u8CmdCpy)
 {
-	static u8 state = 0;
-	static u8 counter = 0 ;
-	u8 retVal = ON_GOING;
+	static u8 send_state = (u8)0;
+	static u8 send_counter = (u8)0;
+	u8 send_retVal = (u8)ON_GOING;
 
-	switch (state)
+	switch (send_state)
 	{
-		case 0 :
+		case (u8)0 :
 		{
 			
 			/* Load Command on Data bus */
@@ -285,29 +274,29 @@ u8 LOC_vidSendCommand(u8 u8CmdCpy)
 
 			/* Set E to HIGH  */
 			DIO_vidSetPinValue(ENABLE_PORT, ENABLE_PIN, HIGH);
-			state = 1 ;
+			send_state = (u8)1 ;
 
 		}break;
 
-		case 1:
-		{			
+		case (u8)1:
+		{
 			/* Set E to LOW */
 			DIO_vidSetPinValue(ENABLE_PORT, ENABLE_PIN, LOW);
-			state = 2 ;
+			send_state = (u8)2 ;
 		}break;
 
-		case 2:
+		case (u8)2:
 		{
-			counter++;
-			if(counter==2)
+			send_counter++;
+			if(send_counter==(u8)2)
 			{
 				/*10ms elapsed*/
-				counter = 0 ;
-				state = 3;
+				send_counter = (u8)0;
+				send_state = (u8)3;
 			}
 		}break;
-	
-		case 3:
+		
+		case (u8)3:
 		{
 			
 			/* Load Command on Data bus */
@@ -320,50 +309,59 @@ u8 LOC_vidSendCommand(u8 u8CmdCpy)
 
 			/* Set E to HIGH  */
 			DIO_vidSetPinValue(ENABLE_PORT, ENABLE_PIN, HIGH);
-			state = 4;
+			send_state = (u8)4;
 
 		}break;
 
-		case 4:
-		{			
+		case (u8)4:
+		{
 			/* Set E to LOW */
 			DIO_vidSetPinValue(ENABLE_PORT, ENABLE_PIN, LOW);
-			state = 5;
+			send_state = (u8)5;
 		}break;
 
-		case 5:
+		case (u8)5:
 		{
-			counter++;
-			if(counter==2)
+			send_counter++;
+			if(send_counter==(u8)2)
 			{
 				/*10ms elapsed*/
-				counter = 0 ;
-				state = 0 ;
-				retVal = DONE;
+				send_counter = (u8)0;
+				send_state = (u8)0;
+				send_retVal = DONE;
 			}
 		}break;
-	
+		default:
+		break;
 	}
 	
-	return retVal;
+	return send_retVal;
 }
-
 
 u8 is_wreq_available(void)
 {
-	return (bWriteRequest == 0);
+	u8 is_w_available = (u8)0;
+	if(bWriteRequest == (u8)0)
+	{
+		is_w_available = (u8)1;
+	}
+	return is_w_available;
 }
 
 u8 getCursorCommand(u8 row, u8 col)
 {
 	u8 code;
-	if(row == 1)
+	if(row == (u8)1)
 	{
-		code = 0x80 + col - 1;
+		code = ((u8)0x80 + col) - (u8)1;
 	}
-	else if(row == 2)
+	else if(row == (u8)2)
 	{
-		code = 0xc0 + col - 1;
+		code = ((u8)0xc0 + col) - (u8)1;
+	}
+	else
+	{
+		/* DO NOTHING */
 	}
 	return code;
 }
