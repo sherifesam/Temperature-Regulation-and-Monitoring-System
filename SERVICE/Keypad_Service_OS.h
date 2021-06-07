@@ -3,7 +3,7 @@
 
 #define HASH_PRESSED 1
 #define HASH_NOT_PRESSED 0
-#define KEYPAD_SERVICE_PEROIDICTY 50
+#define KEYPAD_SERVICE_PEROIDICTY ((u32)200)
 
 void Keypad_service_OS_Task(void *pvoid);
 u8 get_set_temp_OS(void);
