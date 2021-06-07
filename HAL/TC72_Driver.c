@@ -7,6 +7,7 @@
 #include "../FreeRTOS/FreeRTOS.h"
 #include "../FreeRTOS/task.h"
 
+/* Global variable to be returned to the SERVICE layer */
 static u8 temp_data=0;
 
 

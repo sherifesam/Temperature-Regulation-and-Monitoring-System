@@ -8,7 +8,7 @@
 static u8 Rows[] = {R1_PIN, R2_PIN, R3_PIN, R4_PIN};
 static u8 Columns[] = {C1_PIN, C2_PIN, C3_PIN};
 
-/* NOT INITALIZED TO SAVE MEMORY */
+/* Global variable to be returned to the SERVICE layer */
 static u8 u8PressedKey;
 
 void KEYPAD_OS_vidInit(void)
