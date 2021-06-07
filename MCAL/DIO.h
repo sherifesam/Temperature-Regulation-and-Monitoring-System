@@ -15,8 +15,8 @@
 #define PORTD ((u8)4)
 
 
-#define HIGH   1
-#define LOW    0
+#define HIGH   ((u8)1)
+#define LOW    ((u8)0)
 
 
 /*Define port Dir */
