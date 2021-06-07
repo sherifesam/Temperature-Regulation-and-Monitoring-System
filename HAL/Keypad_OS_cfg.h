@@ -1,6 +1,10 @@
 #ifndef KEYPAD_OS_CFG_H_
 #define KEYPAD_OS_CFG_H_
 
+#define NO_OF_ROWS ((u8)4)
+#define NO_OF_COLS ((u8)3)
+
+#define KEYPAD_TASK_PERIODICTIY ((u32)200)
 
 /*Configure Columns port and pins*/
 #define C_PORT	(PORTA)
