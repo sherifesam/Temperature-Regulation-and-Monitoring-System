@@ -1,9 +1,3 @@
-/*
- * SPI.h
- *
- *  Created on: Oct 12, 2018
- *      Author: hp
- */
 
 #ifndef SPI_H_
 #define SPI_H_

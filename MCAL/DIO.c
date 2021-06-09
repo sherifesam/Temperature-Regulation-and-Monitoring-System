@@ -1,7 +1,4 @@
-/*
- * DIO.c
- *
- */
+
 #include "../STD_Types.h"
 #include "../MCAL/DIO.h"
 #include "../macros.h"

@@ -4,7 +4,7 @@
 #define NO_OF_ROWS ((u8)4)
 #define NO_OF_COLS ((u8)3)
 
-#define KEYPAD_TASK_PERIODICTIY ((u32)200)
+#define KEYPAD_TASK_PERIODICTIY (25)
 
 /*Configure Columns port and pins*/
 #define C_PORT	(PORTA)
@@ -14,7 +14,7 @@
 #define C4_PIN	(PIN7)
 
 /*Configure Rows port and pins*/
-#define R_PORT	(PORTA)
+#define R_PORT	(PORTD)
 #define R1_PIN	(PIN0)
 #define R2_PIN	(PIN1)
 #define R3_PIN	(PIN2)

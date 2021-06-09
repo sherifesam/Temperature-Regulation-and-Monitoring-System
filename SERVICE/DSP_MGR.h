@@ -12,9 +12,16 @@
 #define WELCOME_ID			((u8)6)
 
 
+#define CRT_TEMP_ROW			((u8)1)
+#define CRT_TEMP_COL			((u8)15)
+#define SET_TEMP_ROW			((u8)1)
+#define SET_TEMP_COL			((u8)5)
+
+
+
 void DISP_WRITE_STATE(u8 mode_id, u8 row, u8 col, u8 *i);
 void DISP_WRITE_TEMP(u8 set_temp, u8 crt_temp);
 u8 IS_WRITING_FINISHED(void);
-void WELCOME_OS_TASK(void* pvoid);
+u8 IS_TEMP_DISPLAYED(void);
 
 #endif

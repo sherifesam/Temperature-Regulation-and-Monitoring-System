@@ -1,14 +1,15 @@
-#include "../STD_Types.h"
-#include "../MCAL/DIO.h"
+
+#include "../FreeRTOS/FreeRTOS.h"
+
 #include "TC72_Driver.h"
 #include "TC72_Driver_cfg.h"
+
 #include "../MCAL/DIO.h"
 #include "../MCAL/SPI.h"
-#include "../FreeRTOS/FreeRTOS.h"
-#include "../FreeRTOS/task.h"
 
-/* Global variable to be returned to the SERVICE layer */
+
 static u8 temp_data=0;
+static u8 TC72_Permission = 0;
 
 
 void TC72_init(void)
@@ -43,16 +44,37 @@ void TC72_readTemperature(void)
 }
 
 
+/* [MISRA VIOLATION] RULE(16.7): It is an RTOS API and a standard definition */
 void TC72_Task_OS(void *pvoid)
 {
+	/* for using TaskDelayUnitl() to make the task periodic */
+	portTickType xLastWakeTime_TC72;
+	/* [MISRA-VIOLATION] (8.1, 8.6, 10.1) Standard RTOS Function typing */
+	xLastWakeTime_TC72 = xTaskGetTickCount();
+	
 	while (1)
 	{
-		TC72_readTemperature();
-		vTaskDelay(TC72_TASK_PERIODICTIY);
+		if(TC72_Permission == (u8)1)
+		{
+			TC72_readTemperature();
+		}
+		else
+		{
+			/* Do nothing */
+		}
+		/* [MISRA-VIOLATION] () RTOS Standrd function prototype defined in the RTOS files */
+		vTaskDelayUntil( (portTickType *)&xLastWakeTime_TC72 , (portTickType)200 );
 	}
+	/* [MISRA VIOLATION] RULE(16.7): It is an RTOS API and a standard definition */
 }
 
 u8 get_crt_temp_OS(void)
 {
 	return temp_data;
+}
+
+
+void TC72_OS_Activate(u8 flag)
+{
+	TC72_Permission = flag;
 }

@@ -13,6 +13,11 @@ void Keypad_service_OS_Task(void *pvoid)
     static u8 num_of_digits_OS = 0;
     static u8 temp_i_OS = 0;
     u8 pressed_key = 0;
+	
+	// for using TaskDelayUnitl() to make the task periodic
+	portTickType xLastWakeTime_KEYPAD_Service;
+	xLastWakeTime_KEYPAD_Service = xTaskGetTickCount();
+	
     while(1)
     {
 		if(num_of_digits_OS < (u8)2)
@@ -37,14 +42,14 @@ void Keypad_service_OS_Task(void *pvoid)
             }
 			
 	    }
-        if(num_of_digits_OS == (u8)2)
+        else if(num_of_digits_OS == (u8)2)
         {
             temp_set_OS = temp_i_OS;
             temp_i_OS = (u8)0;
 			num_of_digits_OS = (u8)0;
                 
         }
-        vTaskDelay(KEYPAD_SERVICE_PEROIDICTY);
+		vTaskDelayUntil( &xLastWakeTime_KEYPAD_Service , KEYPAD_SERVICE_PEROIDICTY );
     }
 }
 
@@ -56,6 +61,6 @@ u8 get_set_temp_OS(void)
 u8 check_hash_key(void)
 {
     /* 65 is the decimal value of 'A' */
-    u8 hash_flag = KEYPAD_u8GetPressedKey_OS() == (u8)65;
+    u8 hash_flag = (KEYPAD_u8GetPressedKey_OS() == (u8)65);
 	return  (hash_flag);
 }

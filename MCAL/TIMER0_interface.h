@@ -1,9 +1,4 @@
-/* *********************************** */
-/* Author     : Muhammed Ehab Adel     */
-/* Describtion: TIMER0_INTFC	       */
-/* Date       :Jun 3,2021              */
-/* Version    : 1.0v                   */
-/* *********************************** */
+
 #ifndef _TIMER0_INT_H
 #define _TIMER0_INT_H
 

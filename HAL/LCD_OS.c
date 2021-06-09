@@ -1,9 +1,4 @@
-/*
- * LCD_OS.c
- *
- *  Created on: Feb 28, 2019
- *      Author: elProf
- */
+
 #include "../STD_Types.h"
 #include "../FreeRTOS/FreeRTOS.h"
 #include "../FreeRTOS/task.h"
@@ -38,8 +33,11 @@ extern void LCD_OS_vidInit(void)
 void LCD_OS_Task(void* pvoid)
 {
 	u8 LCD_OS_retVal ;
-	u8 LCD_OS_w_retVal;
 
+	/* for using TaskDelayUnitl() to make the task periodic */
+	portTickType xLastWakeTime_LCD;
+	xLastWakeTime_LCD = xTaskGetTickCount();
+	
 	while(1)
 	{
 		switch(state)
@@ -48,50 +46,50 @@ void LCD_OS_Task(void* pvoid)
 			case STATE_INIT_0:
 			{
 				/* Function Set  */
-			    LCD_OS_retVal = LOC_vidSendCommand((u8)lcd_Home);
+				LCD_OS_retVal = LOC_vidSendCommand((u8)lcd_Home);
 				if(LCD_OS_retVal == DONE)
 				{
-				    state = STATE_INIT_1 ;
+					state = STATE_INIT_1 ;
 				}
 			}break;
 			
 			case STATE_INIT_1:
 			{
 				/* Function Set  */
-			    LCD_OS_retVal = LOC_vidSendCommand((u8)lcd_FunctionSet4bit);
+				LCD_OS_retVal = LOC_vidSendCommand((u8)lcd_FunctionSet4bit);
 				if(LCD_OS_retVal == DONE)
 				{
-				    state = STATE_INIT_2;
+					state = STATE_INIT_2;
 				}
 			}break;
 
 			case STATE_INIT_2:
 			{
 				/* Display ON OFF Control */
-			    LCD_OS_retVal = LOC_vidSendCommand((u8)lcd_DisplayOn);
+				LCD_OS_retVal = LOC_vidSendCommand((u8)lcd_DisplayOn);
 				if(LCD_OS_retVal == DONE)
 				{
-				    state = STATE_INIT_3;
+					state = STATE_INIT_3;
 				}
 			}break;
 
 			case STATE_INIT_3:
 			{
 				/* Clear Display */
-			    LCD_OS_retVal = LOC_vidSendCommand((u8)lcd_Clear);
+				LCD_OS_retVal = LOC_vidSendCommand((u8)lcd_Clear);
 				if(LCD_OS_retVal == DONE)
 				{
-				    state = STATE_INIT_4;
+					state = STATE_INIT_4;
 				}
 			}break;
 
 			case STATE_INIT_4:
 			{
 				/* Entry Mode Set  */
-			    LCD_OS_retVal = LOC_vidSendCommand((u8)lcd_EntryMode);
+				LCD_OS_retVal = LOC_vidSendCommand((u8)lcd_EntryMode);
 				if(LCD_OS_retVal == DONE)
 				{
-				    state = STATE_0 ;
+					state = STATE_0 ;
 					bInitilized = (u8)1;
 				}
 			}break;
@@ -100,22 +98,23 @@ void LCD_OS_Task(void* pvoid)
 			{
 				if(bWriteRequest == (u8)1)
 				{
-				    LCD_OS_w_retVal = (u8)LCD_OS_WriteChar_API();
-					if(LCD_OS_w_retVal == DONE)
+					while(LCD_OS_WriteChar_API() != DONE)
 					{
-					    state = STATE_0 ;
-						bWriteRequest = (u8)0;
+						/* Do Nothing */
 					}
+					state = STATE_0 ;
+					bWriteRequest = (u8)0;
 				}
 
 			}break;
 
 			default:
-			    break;
+			break;
 		}
 
-		vTaskDelay(LCD_TASK_PERIODICTIY);
+		vTaskDelayUntil( &xLastWakeTime_LCD , LCD_TASK_PERIODICTIY );
 	}
+	/* [MISRA VIOLATION] RULE(16.7): It is an RTOS API and a standard definition */
 }
 
 u8 LCD_OS_WriteChar_API(void)

@@ -1,9 +1,4 @@
-/*
- * ADC_priv.h
- *
- * Created: 6/2/2021 6:04:15 PM
- * Author : mostafa amr
- */ 
+
 #ifndef ADC_PRIV_H_
 #define ADC_PRIV_H_
 
@@ -15,6 +10,7 @@ typedef struct{
 }ADC;
 
 /* M is Refer To MCal */
+
 #define MADC ((volatile ADC *)0x24)
 
 /* ADCSRA */
