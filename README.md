@@ -7,5 +7,13 @@ The system monitors the temperature sensor from the TC72 temperature sensor and 
 ![System Flow](System_Flow.jpeg "System Flow")
 
 
+## Files Structure
+We're using layered architecture and the system is dividied into 4 layers (MCAL, HAL, Service layer and Application layer) as explained in the following figure
 
+![Layered Architecture](System_Design.jpeg "Layered Architecture")
+
+## FreeRTOS
+We're also including FreeRTOS in our project to make it more realtime and we handled our system with multiple tasks and they're descriped in the following figure 
+
+![Free RTOS Tasks](RTOS_Tasks.jpeg "Free RTOS Tasks")
 
