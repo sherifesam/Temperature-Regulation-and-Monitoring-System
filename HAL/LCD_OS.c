@@ -1,4 +1,19 @@
 
+/******************************************************************************
+ *
+ * File Name:   LCD_OS.c
+ *
+ * Description: A source file in the HAL layer of the project
+ * 				which is responsible for the APIs of the LCD Module
+ * 				
+ *
+ * Date:        10/6/2021
+ *
+ * Author:      Sherif Esam		Mostafa Amr		Muhammed el Said
+ * 				Ahmed Khaled	Muhammed Ehab	Mostafa Abdelmohsen
+ ******************************************************************************/
+
+
 #include "../STD_Types.h"
 #include "../FreeRTOS/FreeRTOS.h"
 #include "../FreeRTOS/task.h"
@@ -8,6 +23,19 @@
 
 static u8 u8Data , bWriteRequest, bInitilized ;
 static u8 state;
+
+
+
+/******************************************************************************
+ *
+ * Function Name: LCD_OS_vidInit
+ *
+ * Description: A function that is responsible for initializing the LCD
+ *
+ * Arguments:   void
+ * Return:      void
+ *
+ *****************************************************************************/
 
 extern void LCD_OS_vidInit(void)
 {
@@ -28,6 +56,19 @@ extern void LCD_OS_vidInit(void)
 	bWriteRequest = (u8)0 ;
 	bInitilized = (u8)0 ;
 }
+
+
+/******************************************************************************
+ *
+ * Function Name: LCD_OS_Task
+ *
+ * Description: A FreeRTOS task that's responsible for initialzing the LCD 
+ * 				at first then waiting for any writing request to do it
+ *
+ * Arguments:   void* pvoid
+ * Return:      void
+ *
+ *****************************************************************************/
 
 /* [MISRA VIOLATION] RULE(16.7): It is an RTOS API and a standard definition*/
 void LCD_OS_Task(void* pvoid)
@@ -117,6 +158,19 @@ void LCD_OS_Task(void* pvoid)
 	/* [MISRA VIOLATION] RULE(16.7): It is an RTOS API and a standard definition */
 }
 
+
+
+/******************************************************************************
+ *
+ * Function Name: LCD_OS_WriteChar_API
+ *
+ * Description: A function that is responsible for writing characters on LCD
+ *
+ * Arguments:   void
+ * Return:      u8
+ *
+ *****************************************************************************/
+
 u8 LCD_OS_WriteChar_API(void)
 {
 	static u8 char_writing_state = (u8)0;
@@ -195,6 +249,20 @@ u8 LCD_OS_WriteChar_API(void)
 	return char_writing_retVal;
 }
 
+
+/******************************************************************************
+ *
+ * Function Name: LCD_OS_WriteChar
+ *
+ * Description: A function that is responsible for giving the request to the
+ * 				LCD_OS_TASK to start writing
+ *
+ * Arguments:   u8 ch
+ * Return:      u8
+ *
+ *****************************************************************************/
+
+
 extern u8 LCD_OS_WriteChar(u8 ch)
 {
 	u8 writing_state = E_NOK;
@@ -211,6 +279,18 @@ extern u8 LCD_OS_WriteChar(u8 ch)
 	return writing_state;
 }
 
+
+
+/******************************************************************************
+ *
+ * Function Name: LCD_OS_WriteChar
+ *
+ * Description: A function that is responsible for sending a command to the LCD
+ *
+ * Arguments:   u8 ch
+ * Return:      u8
+ *
+ *****************************************************************************/
 
 u8 LOC_vidSendCommand(u8 u8CmdCpy)
 {
@@ -286,6 +366,19 @@ u8 LOC_vidSendCommand(u8 u8CmdCpy)
 	return send_retVal;
 }
 
+
+/******************************************************************************
+ *
+ * Function Name: is_wreq_available
+ *
+ * Description: A function that is responsible for checking if the writing request
+ * 				is on or off
+ *
+ * Arguments:   void
+ * Return:      u8
+ *
+ *****************************************************************************/
+
 u8 is_wreq_available(void)
 {
 	u8 is_w_available = (u8)0;
@@ -295,6 +388,19 @@ u8 is_wreq_available(void)
 	}
 	return is_w_available;
 }
+
+
+/******************************************************************************
+ *
+ * Function Name: is_wreq_available
+ *
+ * Description: A function that is responsible for calculating the hex data 
+ * 				that should be sent to the LCD in order to move the cursor
+ *
+ * Arguments:   u8 row, u8 col
+ * Return:      u8
+ *
+ *****************************************************************************/
 
 u8 getCursorCommand(u8 row, u8 col)
 {

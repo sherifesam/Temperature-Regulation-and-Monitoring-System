@@ -1,3 +1,17 @@
+/******************************************************************************
+ *
+ * File Name:   TIMER0_program.c
+ *
+ * Description: A source file in the MCAL layer of the project
+ * 				which is responsible for the APIs of the Timer Module
+ * 				
+ *
+ * Date:        10/6/2021
+ *
+ * Author:      Sherif Esam		Mostafa Amr		Muhammed el Said
+ * 				Ahmed Khaled	Muhammed Ehab	Mostafa Abdelmohsen
+ ******************************************************************************/
+
 
 #include "../STD_TYPES.h"
 #include "../macros.h"

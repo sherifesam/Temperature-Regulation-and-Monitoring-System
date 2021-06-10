@@ -1,3 +1,16 @@
+/******************************************************************************
+ *
+ * File Name:   DSP_MGR.c
+ *
+ * Description: A source file in the Service layer of the project
+ * 				which is responsible for writing on the LCD
+ *
+ * Date:        10/6/2021
+ *
+ * Author:      Sherif Esam		Mostafa Amr		Muhammed el Said
+ * 				Ahmed Khaled	Muhammed Ehab	Mostafa Abdelmohsen
+ ******************************************************************************/
+
 #include "../STD_Types.h"
 #include "../HAL/LCD_OS.h"
 #include "../HAL/Keypad_OS.h"
@@ -20,6 +33,21 @@ char* modes[] = {normal, standby, operation, error, initial_state, initial_temp,
 
 static u8 DISP_FIN_WRITING = 0;
 static u8 TEMP_DISPLAYED = 0;
+
+
+
+/******************************************************************************
+ *
+ * Function Name: DISP_WRITE_STATE
+ *
+ * Description: A Function that is responsible for updating the state of the system
+ * 				on the LCD
+ * 
+ * 
+ * Arguments: 	u8 mode_id, u8 row, u8 col, u8 *i
+ * Return:      void
+ *
+ *****************************************************************************/
 
 void DISP_WRITE_STATE(u8 mode_id, u8 row, u8 col, u8 *i)
 {
@@ -46,6 +74,21 @@ void DISP_WRITE_STATE(u8 mode_id, u8 row, u8 col, u8 *i)
 		}
 	}
 }
+
+
+/******************************************************************************
+ *
+ * Function Name: DISP_WRITE_STATE
+ *
+ * Description: A Function that is responsible for updating the Temperature 
+ * 				of the system on the LCD
+ * 				
+ * 
+ * 
+ * Arguments: 	u8 set_temp, u8 crt_temp
+ * Return:      void
+ *
+ *****************************************************************************/
 
 void DISP_WRITE_TEMP(u8 set_temp, u8 crt_temp)
 {
@@ -116,6 +159,21 @@ void DISP_WRITE_TEMP(u8 set_temp, u8 crt_temp)
 }
 
 
+
+/******************************************************************************
+ *
+ * Function Name: IS_WRITING_FINISHED
+ *
+ * Description: A Function that is responsible for checking if the LCD has 	
+ * 				finished writing the new state
+ * 				
+ * 
+ * 
+ * Arguments: 	void
+ * Return:      u8
+ *
+ *****************************************************************************/
+
 u8 IS_WRITING_FINISHED(void)
 {
 	u8 cond = (u8)0;
@@ -126,6 +184,22 @@ u8 IS_WRITING_FINISHED(void)
 	}
 	return cond;
 }
+
+
+/******************************************************************************
+ *
+ * Function Name: IS_TEMP_DISPLAYED
+ *
+ * Description: A Function that is responsible for checking if the LCD has 	
+ * 				finished writing the new temperatures
+ * 				
+ * 
+ * 
+ * Arguments: 	void
+ * Return:      u8
+ *
+ *****************************************************************************/
+
 
 u8 IS_TEMP_DISPLAYED(void)
 {

@@ -1,3 +1,17 @@
+/******************************************************************************
+ *
+ * File Name:   ADC_OS.c
+ *
+ * Description: A source file in the MCAL layer of the project
+ * 				which is responsible for the APIs of the ADC Module
+ * 				
+ *
+ * Date:        10/6/2021
+ *
+ * Author:      Sherif Esam		Mostafa Amr		Muhammed el Said
+ * 				Ahmed Khaled	Muhammed Ehab	Mostafa Abdelmohsen
+ ******************************************************************************/
+
 #include "../FreeRTOS/FreeRTOS.h"
 #include "../STD_Types.h"
 #include "../macros.h"
@@ -9,6 +23,19 @@
 static f32 ADC_value = 0;
 static u8 ADC_Permission = 0;
 
+
+
+
+/******************************************************************************
+ *
+ * Function Name: ADC_OS_init
+ *
+ * Description: A Function that is responsible for initializing the ADC module
+ *
+ * Arguments: 	void
+ * Return:      void 
+ *
+ *****************************************************************************/
 
 void ADC_OS_init(void)
 {
@@ -26,6 +53,20 @@ void ADC_OS_init(void)
 	/* [MISRA-VIOLATION] (11.3) Standard function-like macro */
 	set_bit(MADC->ADMUX,ADLAR);
 }
+
+
+
+/******************************************************************************
+ *
+ * Function Name: ADC_OS_Task
+ *
+ * Description: A FreeRTOS task that is responsible for getting an ADC value
+ * 				Every 500ms
+ *
+ * Arguments: 	void* pvoid
+ * Return:      void 
+ *
+ *****************************************************************************/
 
 /* [MISRA VIOLATION] RULE(16.7): It is an RTOS API and a standard definition */
 void ADC_OS_Task(void* pvoid)
@@ -72,11 +113,40 @@ void ADC_OS_Task(void* pvoid)
 	/* [MISRA VIOLATION] RULE(16.7): It is an RTOS API and a standard definition */
 }
 
+
+
+/******************************************************************************
+ *
+ * Function Name: ADC_OS_GetValue
+ *
+ * Description: A FreeRTOS task that is responsible for returning the last updated
+ * 				ADC value
+ *
+ * Arguments: 	void
+ * Return:      f32 
+ *
+ *****************************************************************************/
+
 f32 ADC_OS_GetValue(void)
 {
 	return ADC_value;
 }
 
+
+
+
+/******************************************************************************
+ *
+ * Function Name: ADC_OS_Task
+ *
+ * Description: A function that is responsible for updating a static variable called
+ * 				ADC_Permission which enables or disables the ADC_OS_Task
+ * 
+ * 
+ * Arguments: 	u8 flag
+ * Return:      void 
+ *
+ *****************************************************************************/
 
 void ADC_OS_Activate(u8 flag)
 {

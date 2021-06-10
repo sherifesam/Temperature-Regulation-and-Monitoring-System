@@ -1,3 +1,16 @@
+/******************************************************************************
+ *
+ * File Name:   DIO.c
+ *
+ * Description: A source file in the MCAL layer of the project
+ * 				which is responsible for the APIs of the DIO Module
+ * 				
+ *
+ * Date:        10/6/2021
+ *
+ * Author:      Sherif Esam		Mostafa Amr		Muhammed el Said
+ * 				Ahmed Khaled	Muhammed Ehab	Mostafa Abdelmohsen
+ ******************************************************************************/
 
 #include "../STD_Types.h"
 #include "../MCAL/DIO.h"
@@ -27,6 +40,18 @@
 #define PIND_REGISTER    (*((volatile u8*) 0x30))
 
 
+
+/******************************************************************************
+ *
+ * Function Name: DIO_vidSetPortDir
+ *
+ * Description: A Function that is responsible for setting port direction 
+ * 				in the DDR 
+ *
+ * Arguments:   u8 u8portName, u8 u8PortDir
+ * Return:      void
+ *
+ *****************************************************************************/
 
 void DIO_vidSetPortDir(u8 u8portName, u8 u8PortDir)
 {
@@ -94,6 +119,19 @@ void DIO_vidSetPortDir(u8 u8portName, u8 u8PortDir)
 }
 
 
+
+
+/******************************************************************************
+ *
+ * Function Name: DIO_vidSetPinDir
+ *
+ * Description: A Function that is responsible for setting pin direction 
+ * 				in the DDR 
+ *
+ * Arguments:   u8 u8portName, u8 u8pinNo , u8 u8PinDir
+ * Return:      void
+ *
+ *****************************************************************************/
 
 void DIO_vidSetPinDir(u8 u8portName, u8 u8pinNo , u8 u8PinDir){
 	switch (u8portName)
@@ -176,6 +214,19 @@ void DIO_vidSetPinDir(u8 u8portName, u8 u8pinNo , u8 u8PinDir){
 }
 
 
+
+/******************************************************************************
+ *
+ * Function Name: DIO_vidSetPortValue
+ *
+ * Description: A Function that is responsible for setting port value 
+ * 				in the PORT register 
+ *
+ * Arguments:   u8 u8PortName , u8 u8PortValue
+ * Return:      void
+ *
+ *****************************************************************************/
+
 void DIO_vidSetPortValue (u8 u8PortName , u8 u8PortValue)
 {
 	switch (u8PortName)
@@ -209,6 +260,18 @@ void DIO_vidSetPortValue (u8 u8PortName , u8 u8PortValue)
 }
 
 
+
+/******************************************************************************
+ *
+ * Function Name: DIO_vidSetPinValue
+ *
+ * Description: A Function that is responsible for setting pin value 
+ * 				in the PORT register 
+ *
+ * Arguments:   u8 u8portName , u8 u8pinNo , u8 u8pinValue
+ * Return:      void
+ *
+ *****************************************************************************/
 
 void DIO_vidSetPinValue (u8 u8portName , u8 u8pinNo , u8 u8pinValue)
 {
@@ -248,6 +311,19 @@ void DIO_vidSetPinValue (u8 u8portName , u8 u8pinNo , u8 u8pinValue)
 
 
 
+
+/******************************************************************************
+ *
+ * Function Name: DIO_vidSetPinValue
+ *
+ * Description: A Function that is responsible for Getting the value
+ * 				on a specific port from the PIN register
+ *
+ * Arguments:   u8 u8PortName
+ * Return:      u8 
+ *
+ *****************************************************************************/
+
 u8 DIO_vidGetPortValue(u8 u8PortName)
 {
 	u8 retVal ;
@@ -285,6 +361,18 @@ u8 DIO_vidGetPortValue(u8 u8PortName)
 
 
 
+/******************************************************************************
+ *
+ * Function Name: DIO_u8GetPinValue
+ *
+ * Description: A Function that is responsible for Getting the value
+ * 				on a specific pin from the PIN register
+ *
+ * Arguments:   u8 u8PortName , u8 u8PinNo
+ * Return:      u8 
+ *
+ *****************************************************************************/
+
 u8 DIO_u8GetPinValue (u8 u8PortName , u8 u8PinNo )
 {
 	u8 Value ;
@@ -317,6 +405,19 @@ u8 DIO_u8GetPinValue (u8 u8PortName , u8 u8PinNo )
 
 	return Value ;
 }
+
+
+/******************************************************************************
+ *
+ * Function Name: DIO_vidSetLowNibbleValue
+ *
+ * Description: A Function that is responsible for setting the value for
+ * 				the last 4 pins of a port
+ *
+ * Arguments:   u8 u8PortName, u8 u8LowNibbleValue
+ * Return:      void 
+ *
+ *****************************************************************************/
 
 void DIO_vidSetLowNibbleValue(u8 u8PortName, u8 u8LowNibbleValue)
 {
@@ -355,6 +456,20 @@ void DIO_vidSetLowNibbleValue(u8 u8PortName, u8 u8LowNibbleValue)
 		    break;
 	}
 }
+
+
+
+/******************************************************************************
+ *
+ * Function Name: DIO_vidSetHighNibbleValue
+ *
+ * Description: A Function that is responsible for setting the value for
+ * 				the first 4 pins of a port
+ *
+ * Arguments:   u8 u8PortName, u8 u8HighNibbleValue
+ * Return:      void 
+ *
+ *****************************************************************************/
 
 void DIO_vidSetHighNibbleValue(u8 u8PortName, u8 u8HighNibbleValue)
 {

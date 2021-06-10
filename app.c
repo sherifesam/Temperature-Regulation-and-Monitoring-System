@@ -1,7 +1,19 @@
-/*
- * App.c
+/******************************************************************************
  *
- */ 
+ * File Name:   app.c
+ *
+ * Description: A source file in the application layer of the project
+ * 				that is responsible for switching between modes of the system
+ * 				according to the difference between the set temperature and 
+ * 				Temperature. It handles the mode switching operation with FreeRTOS
+ * 				tasks.
+ *
+ * Date:        10/6/2021
+ *
+ * Author:      Sherif Esam		Mostafa Amr		Muhammed el Said
+ * 				Ahmed Khaled	Muhammed Ehab	Mostafa Abdelmohsen
+ ******************************************************************************/
+
 
 #include "FreeRTOS/FreeRTOS.h"
 #include "FreeRTOS/FreeRTOSConfig.h"
@@ -39,13 +51,36 @@ void APP_OS_TASK(void* pvoid);
 void WELCOME_OS_TASK(void* pvoid);
 void Init_Task(void* pvoid);
 
+
+/******************************************************************************
+ *
+ * Function Name: MyTimer
+ *
+ * Description: Call Back function for the software timer 
+ *
+ * Arguments:   xTimerHandle Timer_Function
+ * Return:      void
+ *
+ *****************************************************************************/
+
 static void MyTimer(xTimerHandle Timer_Function)
 {
 	/* Check SW_TIMER_THRESHOLD to adjust the time required for your system */ 
 	/* Empty Function For the Timer */
 }
 
-/* App Task */
+
+
+/******************************************************************************
+ *
+ * Function Name: APP_OS_TASK
+ *
+ * Description: A FreeRTOS task responsible for mode switching in the system
+ *
+ * Arguments:   void* pvoid
+ * Return:      void
+ *
+ *****************************************************************************/
 
 void APP_OS_TASK(void* pvoid)
 {
@@ -157,7 +192,20 @@ void APP_OS_TASK(void* pvoid)
 	/* [MISRA VIOLATION] RULE(16.7): It is an RTOS API and a standard definition */
 }
 
-/* WELCOME TASK */
+
+
+/******************************************************************************
+ *
+ * Function Name: WELCOME_OS_TASK
+ *
+ * Description: A FreeRTOS task responsible for the welcome screen
+ *
+ * Arguments:   void* pvoid
+ * Return:      void
+ *
+ *****************************************************************************/
+
+
 /* [MISRA VIOLATION] RULE(16.7): It is an RTOS API and a standard definition */
 void WELCOME_OS_TASK(void* pvoid)
 {
@@ -376,6 +424,18 @@ void WELCOME_OS_TASK(void* pvoid)
 	}
 	/* [MISRA VIOLATION] RULE(16.7): It is an RTOS API and a standard definition */
 }
+
+
+/******************************************************************************
+ *
+ * Function Name: Init_Task
+ *
+ * Description: A FreeRTOS task responsible for the initializing the system
+ *
+ * Arguments:   void* pvoid
+ * Return:      void
+ *
+ *****************************************************************************/
 
 void Init_Task(void* pvoid)
 {

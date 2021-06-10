@@ -1,3 +1,18 @@
+/******************************************************************************
+ *
+ * File Name:   Keypad_Service_OS.c
+ *
+ * Description: A source file in the Service layer of the project
+ * 				which is responsible for the handling the input coming
+ *              from the user and save it as a 2-digit temperature value
+ * 				
+ *
+ * Date:        10/6/2021
+ *
+ * Author:      Sherif Esam		Mostafa Amr		Muhammed el Said
+ * 				Ahmed Khaled	Muhammed Ehab	Mostafa Abdelmohsen
+ ******************************************************************************/
+
 #include "../STD_Types.h"
 #include "../HAL/Keypad_OS.h"
 #include "Keypad_Service_OS.h"
@@ -6,6 +21,22 @@
 
 /* Global variable to be returned to the APP layer */
 static u8 temp_set_OS = 25;
+
+
+
+
+/******************************************************************************
+ *
+ * Function Name: Keypad_service_OS_Task
+ *
+ * Description: A FreeRTOS task which is responsible for handling the input 
+ *              from the user
+ * 
+ * 
+ * Arguments: 	void *pvoid
+ * Return:      void 
+ *
+ *****************************************************************************/
 
 /* [MISRA VIOLATION] RULE(16.7): It is an RTOS API and a standard definition*/
 void Keypad_service_OS_Task(void *pvoid)
@@ -53,10 +84,37 @@ void Keypad_service_OS_Task(void *pvoid)
     }
 }
 
+
+/******************************************************************************
+ *
+ * Function Name: Keypad_service_OS_Task
+ *
+ * Description: A Function that is responsible for returning the last input
+ *              from the user
+ * 
+ * 
+ * Arguments: 	void 
+ * Return:      u8 
+ *
+ *****************************************************************************/
 u8 get_set_temp_OS(void)
 {
 	return temp_set_OS;
 }
+
+
+/******************************************************************************
+ *
+ * Function Name: check_hash_key
+ *
+ * Description: A Function that is responsible for checking if the user has 
+ *              pressed the hash key
+ * 
+ * 
+ * Arguments: 	void 
+ * Return:      u8 
+ *
+ *****************************************************************************/
 
 u8 check_hash_key(void)
 {

@@ -1,3 +1,17 @@
+/******************************************************************************
+ *
+ * File Name:   Keypad_OS.c
+ *
+ * Description: A source file in the HAL layer of the project
+ * 				which is responsible for the APIs of the Keypad Module
+ * 				
+ *
+ * Date:        10/6/2021
+ *
+ * Author:      Sherif Esam		Mostafa Amr		Muhammed el Said
+ * 				Ahmed Khaled	Muhammed Ehab	Mostafa Abdelmohsen
+ ******************************************************************************/
+
 #include "../STD_Types.h"
 #include "../MCAL/DIO.h"
 #include "Keypad_OS_cfg.h"
@@ -10,6 +24,19 @@ static u8 Columns[] = {C1_PIN, C2_PIN, C3_PIN};
 
 /* Global variable to be returned to the SERVICE layer */
 static u8 u8PressedKey;
+
+
+
+/******************************************************************************
+ *
+ * Function Name: KEYPAD_OS_vidInit
+ *
+ * Description: A function that is responsible for initializing the Keypad
+ *
+ * Arguments:   void
+ * Return:      void
+ *
+ *****************************************************************************/
 
 void KEYPAD_OS_vidInit(void)
 {
@@ -29,6 +56,20 @@ void KEYPAD_OS_vidInit(void)
 		DIO_vidSetPinValue(C_PORT,Columns[KEYPAD_u8PinNo],HIGH);
 	}
 }
+
+
+
+/******************************************************************************
+ *
+ * Function Name: KEYPAD_OS_Task
+ *
+ * Description: A FreeRTOS Task that is responsible for updating the pressed key
+ * 				value ina static variable u8PressedKey
+ *
+ * Arguments:   void *pvoid
+ * Return:      void
+ *
+ *****************************************************************************/
 
 /* [MISRA VIOLATION] RULE(16.7): It is an RTOS API and a standard definition*/
 void KEYPAD_OS_Task(void *pvoid)
@@ -71,6 +112,19 @@ void KEYPAD_OS_Task(void *pvoid)
 	/* [MISRA VIOLATION] RULE(16.7): It is an RTOS API and a standard definition */
 }
 
+
+
+/******************************************************************************
+ *
+ * Function Name: KEYPAD_OS_vidInit
+ *
+ * Description: A function that is responsible for returning the last value
+ * 				of the pressed key
+ *
+ * Arguments:   void
+ * Return:      u8
+ *
+ *****************************************************************************/
 u8 KEYPAD_u8GetPressedKey_OS(void)
 {
 	return u8PressedKey;
